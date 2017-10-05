@@ -1,0 +1,33 @@
+{
+  "name": "teil",
+  "version": "0.1.0",
+  "main": "lib/teil.js",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "cross-env PORT=9991 nuxt dev --config-file=docs.config.js",
+    "dev": "run-p docs:dev",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "lint": "eslint --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "import-fresh": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/bulma": "^1.0.3",
+    "@nuxtjs/markdownit": "^1.1.2",
+    "cross-env": "^5.0.5",
+    "eslint": "^4.8.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^21.2.1",
+    "node-sass": "^4.5.3",
+    "npm-run-all": "^4.1.1",
+    "nuxt": "^1.0.0-rc11",
+    "sass-loader": "^6.0.6"
+  }
+}

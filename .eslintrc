@@ -1,0 +1,37 @@
+{
+  "env": {
+    "commonjs": true,
+    "node": true
+  },
+  "rules": {
+    "no-const-assign": "warn",
+    "no-this-before-super": "warn",
+    "no-undef": "warn",
+    "no-unreachable": "warn",
+    "no-unused-vars": "warn",
+    "constructor-super": "warn",
+    "valid-typeof": "warn"
+  },
+  "extends": [
+    "standard"
+  ],
+  "globals": {
+    "jest": true,
+    "test": true,
+    "expect": true,
+    "mockFn": true,
+    "config": true,
+    "afterEach": true,
+    "afterAll": true,
+    "beforeEach": true,
+    "beforeAll": true,
+    "describe": true,
+    "it": true,
+    "runs": true,
+    "waitsFor": true,
+    "pit": true,
+    "require": true,
+    "xdescribe": true,
+    "xit": true
+  }
+}
