@@ -6,13 +6,13 @@ module.exports = {
       params: {},
       response: {}
     },
-    (request, reply, next) => {
+    ({ next }) => {
       next()
     },
-    (request, reply, next) => {
+    ({ next }) => {
       next()
     },
-    (request, reply) => {
+    ({ reply }) => {
       reply.send({ success: true })
     }
   ]

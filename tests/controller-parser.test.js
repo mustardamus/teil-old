@@ -3,7 +3,7 @@ const controllerParser = require('../lib/controller-parser')
 
 const fixDir = join(__dirname, 'fixtures/controllers')
 
-describe('Controller Parsing', () => {
+describe('Controller Parser', () => {
   it('should throw an error if controller file does not exist', () => {
     return controllerParser('not-existent.js').catch(err => {
       expect(err.message).toBe("Controller 'not-existent.js' does not exist")
@@ -49,7 +49,7 @@ describe('Controller Parsing', () => {
       expect(Array.isArray(routes)).toBe(true)
       expect(routes.length).toBe(2)
       expect(routes[0].method).toBe('GET')
-      expect(routes[0].url).toBe('/export-single-function/')
+      expect(routes[0].url).toBe('/export-single-function')
       expect(typeof routes[0].handler).toBe('function')
       expect(routes[1].method).toBe('POST')
       expect(routes[1].url).toBe('/export-single-function/save')

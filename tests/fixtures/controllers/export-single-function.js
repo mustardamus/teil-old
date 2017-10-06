@@ -1,9 +1,9 @@
 module.exports = {
-  'GET /' (request, reply) {
+  'GET /' ({ reply }) {
     reply.send({ success: true })
   },
 
-  'POST save' (request, reply) {
+  'POST save' ({ reply }) {
     reply.send({ success: true })
   }
 }

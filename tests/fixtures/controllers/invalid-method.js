@@ -1,5 +1,5 @@
 module.exports = {
-  'NOPE /' (request, reply) {
+  'NOPE /' ({ reply }) {
     reply.send({ success: true })
   }
 }
