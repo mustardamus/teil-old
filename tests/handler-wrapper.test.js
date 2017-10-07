@@ -5,19 +5,30 @@ describe('Handler Wrapper', () => {
     const request = 'request'
     const reply = 'reply'
     const next = 'next'
-    const handler = jest.fn()
-    const wrapper = handlerWrapper(handler)
+    const handlerArgs = jest.fn((request, reply, next) => {})
+    const wrapperArgs = handlerWrapper(handlerArgs)
+    const handlerObj = jest.fn(({ request, reply, next }) => {})
+    const wrapperObj = handlerWrapper(handlerObj)
 
-    expect(typeof wrapper).toBe('function')
+    expect(typeof wrapperArgs).toBe('function')
+    expect(typeof wrapperObj).toBe('function')
 
-    wrapper(request, reply, next)
+    wrapperArgs(request, reply, next)
 
-    const calls = handler.mock.calls
-    const obj = calls[0][0]
+    const callsArgs = handlerArgs.mock.calls
 
-    expect(calls.length).toBe(1)
-    expect(obj.request).toBe(request)
-    expect(obj.reply).toBe(reply)
-    expect(obj.next).toBe(next)
+    expect(callsArgs.length).toBe(1)
+    expect(callsArgs[0][0]).toBe(request)
+    expect(callsArgs[0][1]).toBe(reply)
+    expect(callsArgs[0][2]).toBe(next)
+
+    wrapperObj(request, reply, next)
+
+    const callsObj = handlerObj.mock.calls
+
+    expect(callsObj.length).toBe(1)
+    expect(callsObj[0][0].request).toBe(request)
+    expect(callsObj[0][0].reply).toBe(reply)
+    expect(callsObj[0][0].next).toBe(next)
   })
 })

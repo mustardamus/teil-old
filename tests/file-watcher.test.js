@@ -1,6 +1,6 @@
 const { join } = require('path')
 const { existsSync } = require('fs')
-const { rm, mkdir, touch } = require('shelljs')
+const { rm, mkdir } = require('shelljs')
 const fileWatcher = require('../lib/file-watcher')
 
 const tempDir = '/tmp'//, join(__dirname, '../temp')
@@ -35,8 +35,7 @@ describe('File Watcher', () => {
   })
 
   it('should watch files in multiple locations and execute the callbacks', () => {
-    return
-    const locations = [
+    /* const locations = [
       { glob: join(controllersDir, '*.js'), cb: jest.fn() },
       { glob: join(modelsDir, '*.js'), cb: jest.fn() }
     ]
@@ -48,6 +47,6 @@ describe('File Watcher', () => {
     setTimeout(() => {
       expect(locations[0].cb.mock.calls.length).toBe(1)
       done()
-    }, 200)
+    }, 200) */
   })
 })
