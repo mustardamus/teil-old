@@ -18,7 +18,10 @@
     "chokidar": "^1.7.0",
     "fastify": "^0.29.2",
     "import-fresh": "^2.0.0",
-    "lodash": "^4.17.4"
+    "js-data": "^3.0.1",
+    "js-data-mongodb": "^1.0.2",
+    "lodash": "^4.17.4",
+    "pluralize": "^7.0.0"
   },
   "devDependencies": {
     "@nuxtjs/bulma": "^1.0.3",
