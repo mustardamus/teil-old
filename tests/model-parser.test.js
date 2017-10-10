@@ -66,7 +66,7 @@ describe('Model Parser', () => {
     const path = join(fixDir, 'schema-function.js')
 
     return modelParser(path).then(model => {
-      expect(model.schema === Object(model.schema)).toBe(true)
+      expect(isObject(model.schema)).toBe(true)
       expect(model.schema.name).toBe(String)
       expect(model.schema.userId).toBe(Schema.Types.ObjectId)
       expect(model.schema.meta).toBe(Schema.Types.Mixed)
@@ -95,7 +95,25 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should have methods')
+  it('should set methods on the model as an array', () => {
+    const path = join(fixDir, 'methods.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.methods)).toBe(true)
+      expect(model.methods.length).toBe(2)
+      expect(model.methods[0].name).toBe('first')
+      expect(typeof model.methods[1].cb).toBe('function')
+    })
+  })
+
+  it('should throw an error if the methods does not export an object', () => {
+    const path = join(fixDir, 'methods-invalid.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes('must export an Object as methods')).toBe(true)
+    })
+  })
+
   it('should have statics')
   it('should have query helpers')
   it('should have virtuals')
