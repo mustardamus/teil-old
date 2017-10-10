@@ -1,5 +1,6 @@
 const { join } = require('path')
 const { Schema } = require('mongoose')
+const { isObject } = require('lodash')
 const modelParser = require('../lib/model-parser')
 
 const fixDir = join(__dirname, 'fixtures/models')
@@ -35,11 +36,28 @@ describe('Model Parser', () => {
     })
   })
 
+  it('should set the options of the model given by an object', () => {
+    const path = join(fixDir, 'options.js')
+
+    return modelParser(path).then(model => {
+      expect(isObject(model.options)).toBe(true)
+      expect(model.options).toEqual(require(path).options)
+    })
+  })
+
+  it('should throw an error if the options does not export an object', () => {
+    const path = join(fixDir, 'options-invalid.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes('must export an Object as options')).toBe(true)
+    })
+  })
+
   it('should set the schema of the model given by an object', () => {
     const path = join(fixDir, 'schema-object.js')
 
     return modelParser(path).then(model => {
-      expect(model.schema === Object(model.schema)).toBe(true)
+      expect(isObject(model.schema)).toBe(true)
       expect(model.schema).toEqual(require(path).schema)
     })
   })
@@ -76,4 +94,9 @@ describe('Model Parser', () => {
       expect(model.schema.url.validate.validator('http://some.com')).toBe(true)
     })
   })
+
+  it('should have methods')
+  it('should have statics')
+  it('should have query helpers')
+  it('should have virtuals')
 })
