@@ -95,7 +95,7 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should set methods on the model for an array', () => {
+  it('should set methods on the model as an array', () => {
     const path = join(fixDir, 'methods.js')
 
     return modelParser(path).then(model => {
@@ -114,7 +114,7 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should set statics on the model for an array', () => {
+  it('should set statics on the model as an array', () => {
     const path = join(fixDir, 'statics.js')
 
     return modelParser(path).then(model => {
@@ -133,7 +133,25 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should have query helpers')
+  it('should set query on the model as an array', () => {
+    const path = join(fixDir, 'query.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.query)).toBe(true)
+      expect(model.query.length).toBe(2)
+      expect(model.query[0].name).toBe('first')
+      expect(typeof model.query[1].fn).toBe('function')
+    })
+  })
+
+  it('should throw an error if the query does not export an object', () => {
+    const path = join(fixDir, 'query-invalid.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes('must export an Object for query')).toBe(true)
+    })
+  })
+
   it('should have virtuals')
   it('should have middleware')
 })
