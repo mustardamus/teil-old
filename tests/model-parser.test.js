@@ -102,7 +102,7 @@ describe('Model Parser', () => {
       expect(Array.isArray(model.methods)).toBe(true)
       expect(model.methods.length).toBe(2)
       expect(model.methods[0].name).toBe('first')
-      expect(typeof model.methods[1].cb).toBe('function')
+      expect(typeof model.methods[1].fn).toBe('function')
     })
   })
 
@@ -114,7 +114,26 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should have statics')
+  it('should set statics on the model as an array', () => {
+    const path = join(fixDir, 'statics.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.statics)).toBe(true)
+      expect(model.statics.length).toBe(2)
+      expect(model.statics[0].name).toBe('first')
+      expect(typeof model.statics[1].fn).toBe('function')
+    })
+  })
+
+  it('should throw an error if the statics does not export an object', () => {
+    const path = join(fixDir, 'statics-invalid.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes('must export an Object as statics')).toBe(true)
+    })
+  })
+
   it('should have query helpers')
   it('should have virtuals')
+  it('should have middleware')
 })
