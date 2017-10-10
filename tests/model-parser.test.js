@@ -152,6 +152,49 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should have virtuals')
+  it('should set virtual on the model as an array', () => {
+    const path = join(fixDir, 'virtual.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.virtual)).toBe(true)
+      expect(model.virtual.length).toBe(2)
+      expect(model.virtual[0].name).toBe('first')
+      expect(typeof model.virtual[0].get).toBe('function')
+      expect(typeof model.virtual[1].set).toBe('function')
+    })
+  })
+
+  it('should throw an error if the virtual does not export an object', () => {
+    const path = join(fixDir, 'virtual-invalid.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes('must export an Object for virtual')).toBe(true)
+    })
+  })
+
+  it('should throw an error if a virtual field does not export a get or set function', () => {
+    const path = join(fixDir, 'virtual-invalid-get-set.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes(`must have a 'get' or/and 'set' method`)).toBe(true)
+    })
+  })
+
+  it('should throw an error if a virtual field does not export a get as function', () => {
+    const path = join(fixDir, 'virtual-invalid-get.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes(`'get' must be a function`)).toBe(true)
+    })
+  })
+
+  it('should throw an error if a virtual field does not export a set as function', () => {
+    const path = join(fixDir, 'virtual-invalid-set.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes(`'set' must be a function`)).toBe(true)
+    })
+  })
+
   it('should have middleware')
 })
