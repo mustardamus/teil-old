@@ -21,7 +21,7 @@
     "js-data": "^3.0.1",
     "js-data-mongodb": "^1.0.2",
     "lodash": "^4.17.4",
-    "pluralize": "^7.0.0"
+    "mongoose": "^4.12.1"
   },
   "devDependencies": {
     "@nuxtjs/bulma": "^1.0.3",

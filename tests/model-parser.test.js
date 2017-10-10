@@ -1,4 +1,5 @@
 const { join } = require('path')
+const { Schema } = require('mongoose')
 const modelParser = require('../lib/model-parser')
 
 const fixDir = join(__dirname, 'fixtures/models')
@@ -18,53 +19,47 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should set the name and table of the model based on the filename', () => {
-    const path = join(fixDir, 'name-table.js')
+  it('should set the name of the model based on the filename', () => {
+    const path = join(fixDir, 'name-from-filename.js')
 
     return modelParser(path).then(model => {
-      expect(model.name).toBe('name-table')
-      expect(model.table).toBe('name-tables')
+      expect(model.name).toBe('NameFromFilename')
     })
   })
 
-  it('should overwrite the name and table of the model', () => {
-    const path = join(fixDir, 'name-table-overwrite.js')
+  it('should overwrite the name of the model if set', () => {
+    const path = join(fixDir, 'name-overwrite.js')
 
     return modelParser(path).then(model => {
-      expect(model.name).toBe('over')
-      expect(model.table).toBe('overs')
+      expect(model.name).toBe('NameOverwrite')
     })
   })
 
-  it('should export a given full schema', () => {
-    const path = join(fixDir, 'full-schema.js')
+  it('should set the schema of the model given by an object', () => {
+    const path = join(fixDir, 'schema-object.js')
 
     return modelParser(path).then(model => {
-      expect(model.schema).toEqual({
-        $schema: 'http://json-schema.org/draft-06/schema#',
-        type: 'object',
-        properties: {
-          id: { type: 'number' },
-          name: { type: 'string' }
-        },
-        required: ['id']
-      })
+      expect(model.schema === Object(model.schema)).toBe(true)
+      expect(model.schema).toEqual(require(path).schema)
     })
   })
 
-  it('should export a given simplified schema', () => {
-    const path = join(fixDir, 'simple-schema.js')
+  it('should set the schema of the model given by an function', () => {
+    const path = join(fixDir, 'schema-function.js')
 
     return modelParser(path).then(model => {
-      expect(model.schema).toEqual({
-        $schema: 'http://json-schema.org/draft-06/schema#',
-        type: 'object',
-        properties: {
-          id: { type: 'number' },
-          name: { type: 'string' }
-        },
-        required: ['id']
-      })
+      expect(model.schema === Object(model.schema)).toBe(true)
+      expect(model.schema.name).toBe(String)
+      expect(model.schema.userId).toBe(Schema.Types.ObjectId)
+      expect(model.schema.meta).toBe(Schema.Types.Mixed)
+    })
+  })
+
+  it('should throw an error if the schema does not export an object or function', () => {
+    const path = join(fixDir, 'schema-invalid.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes('must export an Object or Function as schema')).toBe(true)
     })
   })
 })
