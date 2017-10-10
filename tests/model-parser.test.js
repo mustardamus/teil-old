@@ -62,4 +62,18 @@ describe('Model Parser', () => {
       expect(err.message.includes('must export an Object or Function as schema')).toBe(true)
     })
   })
+
+  it('should have access to custom validations in the schema', () => {
+    const path = join(fixDir, 'schema-custom-validation.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.schema.email.validate)).toBe(true)
+      expect(typeof model.schema.email.validate[0]).toBe('function')
+      expect(model.schema.email.validate[0]('some@mail.com')).toBe(true)
+
+      expect(typeof model.schema.url.validate).toBe('object')
+      expect(typeof model.schema.url.validate.validator).toBe('function')
+      expect(model.schema.url.validate.validator('http://some.com')).toBe(true)
+    })
+  })
 })

@@ -1,9 +1,9 @@
 module.exports = {
-  schema (Schema) {
+  schema ({ Types }) {
     return {
       name: String,
-      userId: Schema.Types.ObjectId,
-      meta: Schema.Types.Mixed
+      userId: Types.ObjectId,
+      meta: Types.Mixed
     }
   }
 }
