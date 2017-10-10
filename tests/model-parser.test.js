@@ -49,7 +49,7 @@ describe('Model Parser', () => {
     const path = join(fixDir, 'options-invalid.js')
 
     return modelParser(path).catch(err => {
-      expect(err.message.includes('must export an Object as options')).toBe(true)
+      expect(err.message.includes('must export an Object for options')).toBe(true)
     })
   })
 
@@ -77,7 +77,7 @@ describe('Model Parser', () => {
     const path = join(fixDir, 'schema-invalid.js')
 
     return modelParser(path).catch(err => {
-      expect(err.message.includes('must export an Object or Function as schema')).toBe(true)
+      expect(err.message.includes('must export an Object or Function for schema')).toBe(true)
     })
   })
 
@@ -95,7 +95,7 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should set methods on the model as an array', () => {
+  it('should set methods on the model for an array', () => {
     const path = join(fixDir, 'methods.js')
 
     return modelParser(path).then(model => {
@@ -110,11 +110,11 @@ describe('Model Parser', () => {
     const path = join(fixDir, 'methods-invalid.js')
 
     return modelParser(path).catch(err => {
-      expect(err.message.includes('must export an Object as methods')).toBe(true)
+      expect(err.message.includes('must export an Object for methods')).toBe(true)
     })
   })
 
-  it('should set statics on the model as an array', () => {
+  it('should set statics on the model for an array', () => {
     const path = join(fixDir, 'statics.js')
 
     return modelParser(path).then(model => {
@@ -129,7 +129,7 @@ describe('Model Parser', () => {
     const path = join(fixDir, 'statics-invalid.js')
 
     return modelParser(path).catch(err => {
-      expect(err.message.includes('must export an Object as statics')).toBe(true)
+      expect(err.message.includes('must export an Object for statics')).toBe(true)
     })
   })
 
