@@ -196,5 +196,65 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should have middleware')
+  it('should set middleware as an array from an object', () => {
+    const path = join(fixDir, 'middleware-pre-post-object.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.middleware)).toBe(true)
+      expect(model.middleware.length).toBe(4)
+      expect(model.middleware[0].hook).toBe('pre')
+      expect(model.middleware[1].name).toBe('save')
+      expect(model.middleware[2].hook).toBe('post')
+      expect(typeof model.middleware[3].fn).toBe('function')
+    })
+  })
+
+  it('should set middleware as an array from an object of an array of functions', () => {
+    const path = join(fixDir, 'middleware-pre-post-object-array.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.middleware)).toBe(true)
+      expect(model.middleware.length).toBe(3)
+      expect(model.middleware[0].hook).toBe('pre')
+      expect(model.middleware[1].name).toBe('save')
+      expect(model.middleware[2].name).toBe('save')
+    })
+  })
+
+  it('should set middleware as an array from an object with the key names as hook names', () => {
+    const path = join(fixDir, 'middleware-pre-post-keys.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.middleware)).toBe(true)
+      expect(model.middleware.length).toBe(2)
+      expect(model.middleware[0].hook).toBe('pre')
+      expect(model.middleware[0].name).toBe('init')
+      expect(model.middleware[1].hook).toBe('post')
+      expect(model.middleware[1].name).toBe('save')
+    })
+  })
+
+  it('should set middleware as an array from an object with the key names as hook names of an array of functions', () => {
+    const path = join(fixDir, 'middleware-pre-post-keys-array.js')
+
+    return modelParser(path).then(model => {
+      expect(Array.isArray(model.middleware)).toBe(true)
+      expect(model.middleware.length).toBe(3)
+      expect(model.middleware[0].hook).toBe('pre')
+      expect(model.middleware[0].name).toBe('init')
+      expect(model.middleware[1].hook).toBe('post')
+      expect(model.middleware[1].name).toBe('save')
+      expect(model.middleware[2].hook).toBe('post')
+      expect(model.middleware[2].name).toBe('save')
+      expect(typeof model.middleware[2].fn).toBe('function')
+    })
+  })
+
+  it('should throw an error if a middleware field does not export a set as function', () => {
+    const path = join(fixDir, 'middleware-invalid.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes('must export an Object for middleware')).toBe(true)
+    })
+  })
 })
