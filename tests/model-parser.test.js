@@ -133,47 +133,47 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should set query on the model as an array', () => {
-    const path = join(fixDir, 'query.js')
+  it('should set queries on the model as an array', () => {
+    const path = join(fixDir, 'queries.js')
 
     return modelParser(path).then(model => {
-      expect(Array.isArray(model.query)).toBe(true)
-      expect(model.query.length).toBe(2)
-      expect(model.query[0].name).toBe('first')
-      expect(typeof model.query[1].fn).toBe('function')
+      expect(Array.isArray(model.queries)).toBe(true)
+      expect(model.queries.length).toBe(2)
+      expect(model.queries[0].name).toBe('first')
+      expect(typeof model.queries[1].fn).toBe('function')
     })
   })
 
-  it('should throw an error if the query does not export an object', () => {
-    const path = join(fixDir, 'query-invalid.js')
+  it('should throw an error if the queries does not export an object', () => {
+    const path = join(fixDir, 'queries-invalid.js')
 
     return modelParser(path).catch(err => {
-      expect(err.message.includes('must export an Object for query')).toBe(true)
+      expect(err.message.includes('must export an Object for queries')).toBe(true)
     })
   })
 
-  it('should set virtual on the model as an array', () => {
-    const path = join(fixDir, 'virtual.js')
+  it('should set virtuals on the model as an array', () => {
+    const path = join(fixDir, 'virtuals.js')
 
     return modelParser(path).then(model => {
-      expect(Array.isArray(model.virtual)).toBe(true)
-      expect(model.virtual.length).toBe(2)
-      expect(model.virtual[0].name).toBe('first')
-      expect(typeof model.virtual[0].get).toBe('function')
-      expect(typeof model.virtual[1].set).toBe('function')
+      expect(Array.isArray(model.virtuals)).toBe(true)
+      expect(model.virtuals.length).toBe(2)
+      expect(model.virtuals[0].name).toBe('first')
+      expect(typeof model.virtuals[0].get).toBe('function')
+      expect(typeof model.virtuals[1].set).toBe('function')
     })
   })
 
-  it('should throw an error if the virtual does not export an object', () => {
-    const path = join(fixDir, 'virtual-invalid.js')
+  it('should throw an error if the virtuals does not export an object', () => {
+    const path = join(fixDir, 'virtuals-invalid.js')
 
     return modelParser(path).catch(err => {
-      expect(err.message.includes('must export an Object for virtual')).toBe(true)
+      expect(err.message.includes('must export an Object for virtuals')).toBe(true)
     })
   })
 
   it('should throw an error if a virtual field does not export a get or set function', () => {
-    const path = join(fixDir, 'virtual-invalid-get-set.js')
+    const path = join(fixDir, 'virtuals-invalid-get-set.js')
 
     return modelParser(path).catch(err => {
       expect(err.message.includes(`must have a 'get' or/and 'set' method`)).toBe(true)
@@ -181,7 +181,7 @@ describe('Model Parser', () => {
   })
 
   it('should throw an error if a virtual field does not export a get as function', () => {
-    const path = join(fixDir, 'virtual-invalid-get.js')
+    const path = join(fixDir, 'virtuals-invalid-get.js')
 
     return modelParser(path).catch(err => {
       expect(err.message.includes(`'get' must be a function`)).toBe(true)
@@ -189,72 +189,72 @@ describe('Model Parser', () => {
   })
 
   it('should throw an error if a virtual field does not export a set as function', () => {
-    const path = join(fixDir, 'virtual-invalid-set.js')
+    const path = join(fixDir, 'virtuals-invalid-set.js')
 
     return modelParser(path).catch(err => {
       expect(err.message.includes(`'set' must be a function`)).toBe(true)
     })
   })
 
-  it('should set middleware as an array from an object', () => {
-    const path = join(fixDir, 'middleware-pre-post-object.js')
+  it('should set middlewares as an array from an object', () => {
+    const path = join(fixDir, 'middlewares-pre-post-object.js')
 
     return modelParser(path).then(model => {
-      expect(Array.isArray(model.middleware)).toBe(true)
-      expect(model.middleware.length).toBe(4)
-      expect(model.middleware[0].hook).toBe('pre')
-      expect(model.middleware[1].name).toBe('save')
-      expect(model.middleware[2].hook).toBe('post')
-      expect(typeof model.middleware[3].fn).toBe('function')
+      expect(Array.isArray(model.middlewares)).toBe(true)
+      expect(model.middlewares.length).toBe(4)
+      expect(model.middlewares[0].hook).toBe('pre')
+      expect(model.middlewares[1].name).toBe('save')
+      expect(model.middlewares[2].hook).toBe('post')
+      expect(typeof model.middlewares[3].fn).toBe('function')
     })
   })
 
-  it('should set middleware as an array from an object of an array of functions', () => {
-    const path = join(fixDir, 'middleware-pre-post-object-array.js')
+  it('should set middlewares as an array from an object of an array of functions', () => {
+    const path = join(fixDir, 'middlewares-pre-post-object-array.js')
 
     return modelParser(path).then(model => {
-      expect(Array.isArray(model.middleware)).toBe(true)
-      expect(model.middleware.length).toBe(3)
-      expect(model.middleware[0].hook).toBe('pre')
-      expect(model.middleware[1].name).toBe('save')
-      expect(model.middleware[2].name).toBe('save')
+      expect(Array.isArray(model.middlewares)).toBe(true)
+      expect(model.middlewares.length).toBe(3)
+      expect(model.middlewares[0].hook).toBe('pre')
+      expect(model.middlewares[1].name).toBe('save')
+      expect(model.middlewares[2].name).toBe('save')
     })
   })
 
-  it('should set middleware as an array from an object with the key names as hook names', () => {
-    const path = join(fixDir, 'middleware-pre-post-keys.js')
+  it('should set middlewares as an array from an object with the key names as hook names', () => {
+    const path = join(fixDir, 'middlewares-pre-post-keys.js')
 
     return modelParser(path).then(model => {
-      expect(Array.isArray(model.middleware)).toBe(true)
-      expect(model.middleware.length).toBe(2)
-      expect(model.middleware[0].hook).toBe('pre')
-      expect(model.middleware[0].name).toBe('init')
-      expect(model.middleware[1].hook).toBe('post')
-      expect(model.middleware[1].name).toBe('save')
+      expect(Array.isArray(model.middlewares)).toBe(true)
+      expect(model.middlewares.length).toBe(2)
+      expect(model.middlewares[0].hook).toBe('pre')
+      expect(model.middlewares[0].name).toBe('init')
+      expect(model.middlewares[1].hook).toBe('post')
+      expect(model.middlewares[1].name).toBe('save')
     })
   })
 
-  it('should set middleware as an array from an object with the key names as hook names of an array of functions', () => {
-    const path = join(fixDir, 'middleware-pre-post-keys-array.js')
+  it('should set middlewares as an array from an object with the key names as hook names of an array of functions', () => {
+    const path = join(fixDir, 'middlewares-pre-post-keys-array.js')
 
     return modelParser(path).then(model => {
-      expect(Array.isArray(model.middleware)).toBe(true)
-      expect(model.middleware.length).toBe(3)
-      expect(model.middleware[0].hook).toBe('pre')
-      expect(model.middleware[0].name).toBe('init')
-      expect(model.middleware[1].hook).toBe('post')
-      expect(model.middleware[1].name).toBe('save')
-      expect(model.middleware[2].hook).toBe('post')
-      expect(model.middleware[2].name).toBe('save')
-      expect(typeof model.middleware[2].fn).toBe('function')
+      expect(Array.isArray(model.middlewares)).toBe(true)
+      expect(model.middlewares.length).toBe(3)
+      expect(model.middlewares[0].hook).toBe('pre')
+      expect(model.middlewares[0].name).toBe('init')
+      expect(model.middlewares[1].hook).toBe('post')
+      expect(model.middlewares[1].name).toBe('save')
+      expect(model.middlewares[2].hook).toBe('post')
+      expect(model.middlewares[2].name).toBe('save')
+      expect(typeof model.middlewares[2].fn).toBe('function')
     })
   })
 
   it('should throw an error if a middleware field does not export a set as function', () => {
-    const path = join(fixDir, 'middleware-invalid.js')
+    const path = join(fixDir, 'middlewares-invalid.js')
 
     return modelParser(path).catch(err => {
-      expect(err.message.includes('must export an Object for middleware')).toBe(true)
+      expect(err.message.includes('must export an Object for middlewares')).toBe(true)
     })
   })
 })
