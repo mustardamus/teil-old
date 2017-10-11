@@ -1,3 +1,3 @@
 module.exports = {
-  middleware: 'Nope'
+  queries: 'Nope'
 }

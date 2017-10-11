@@ -1,5 +1,5 @@
 module.exports = {
-  middleware: {
+  middlewares: {
     pre: {
       init () {},
       save () {}

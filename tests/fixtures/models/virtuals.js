@@ -1,5 +1,5 @@
 module.exports = {
-  virtual: {
+  virtuals: {
     first: {
       get () {
         return 'get'

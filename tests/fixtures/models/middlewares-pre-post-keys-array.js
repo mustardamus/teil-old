@@ -1,5 +1,5 @@
 module.exports = {
-  middleware: {
+  middlewares: {
     preInit () {},
     postSave: [
       () => {},

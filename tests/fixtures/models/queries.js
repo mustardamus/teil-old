@@ -1,5 +1,5 @@
 module.exports = {
-  query: {
+  queries: {
     first (val, cb) {
       cb(val)
     },

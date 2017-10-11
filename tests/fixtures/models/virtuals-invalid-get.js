@@ -1,7 +1,7 @@
 module.exports = {
-  virtual: {
+  virtuals: {
     name: {
-      set: 'Nope'
+      get: 'Nope'
     }
   }
 }
