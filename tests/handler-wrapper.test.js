@@ -25,11 +25,13 @@ describe('Handler Wrapper', () => {
     return wrapperObj(request, reply, next)
       .then(() => {
         const callsObj = handlerObj.mock.calls
+        const args = callsObj[0][0]
 
         expect(callsObj.length).toBe(1)
-        expect(callsObj[0][0].request).toBe(request)
-        expect(callsObj[0][0].reply).toBe(reply)
-        expect(callsObj[0][0].next).toBe(next)
+        expect(args.request).toBe(request)
+        expect(args.reply).toBe(reply)
+        expect(args.next).toBe(next)
+        expect(args.models).toEqual({})
       })
   })
 })
