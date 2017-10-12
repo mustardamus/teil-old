@@ -1,3 +1,5 @@
+let middlewareHook
+
 module.exports = {
   name: 'Post',
 
@@ -43,6 +45,35 @@ module.exports = {
   queries: {
     giveBackArray () {
       return []
+    }
+  },
+
+  virtuals: {
+    virtualTitle: {
+      get () {
+        return this.title
+      },
+
+      set (val) {
+        this.title = val
+      }
+    },
+
+    middlewareHook: {
+      get () {
+        return middlewareHook
+      },
+
+      set (val) {
+        middlewareHook = val
+      }
+    }
+  },
+
+  middlewares: {
+    'pre-validate' (next) {
+      middlewareHook()
+      next()
     }
   }
 }

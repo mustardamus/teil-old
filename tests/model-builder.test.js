@@ -22,6 +22,14 @@ describe('Model Builder', () => {
       expect(model.giveBackTitle()).toBe('success')
       expect(Model.giveBackTrue()).toBe(true)
       expect(Model.find().giveBackArray()).toEqual([])
+
+      expect(model.virtualTitle).toBe(model.title)
+      model.virtualTitle = 'yo'
+      expect(model.virtualTitle).toBe('yo')
+
+      model.middlewareHook = jest.fn()
+      model.validate()
+      expect(model.middlewareHook.mock.calls.length).toBe(1)
     })
   })
 })
