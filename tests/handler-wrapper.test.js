@@ -22,13 +22,14 @@ describe('Handler Wrapper', () => {
     expect(callsArgs[0][1]).toBe(reply)
     expect(callsArgs[0][2]).toBe(next)
 
-    wrapperObj(request, reply, next)
+    return wrapperObj(request, reply, next)
+      .then(() => {
+        const callsObj = handlerObj.mock.calls
 
-    const callsObj = handlerObj.mock.calls
-
-    expect(callsObj.length).toBe(1)
-    expect(callsObj[0][0].request).toBe(request)
-    expect(callsObj[0][0].reply).toBe(reply)
-    expect(callsObj[0][0].next).toBe(next)
+        expect(callsObj.length).toBe(1)
+        expect(callsObj[0][0].request).toBe(request)
+        expect(callsObj[0][0].reply).toBe(reply)
+        expect(callsObj[0][0].next).toBe(next)
+      })
   })
 })
