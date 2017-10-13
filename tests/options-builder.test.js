@@ -5,8 +5,8 @@ describe('Options Builder', () => {
   it('should return the default options', () => {
     const opt = optionsBuilder()
 
-    expect(opt.controllersGlob.includes('controllers/**/*!(.test|.spec|.draft).js')).toBe(true)
-    expect(opt.modelsGlob.includes('models/**/*!(.test|.spec|.draft).js')).toBe(true)
+    expect(opt.controllersGlob.includes('controllers/**/!(*test|*spec|*draft).js')).toBe(true)
+    expect(opt.modelsGlob.includes('models/**/!(*test|*spec|*draft).js')).toBe(true)
   })
 
   it('should overwrite the default options with a config file', () => {
