@@ -41,4 +41,30 @@ describe('Context Builder', () => {
       expect(context.Post).toBeTruthy()
     })
   })
+
+  it('should create shortcuts of common used methods', () => {
+    const ctx = {
+      request: {
+        query: true,
+        body: true,
+        params: true,
+        headers: true,
+        log () { return true }
+      },
+      reply: {
+        send () { return true },
+        redirect () { return true }
+      }
+    }
+
+    return contextBuilder(ctx).then(context => {
+      expect(context.query).toBe(true)
+      expect(context.body).toBe(true)
+      expect(context.params).toBe(true)
+      expect(context.headers).toBe(true)
+      // expect(context.log()).toBe(true)
+      expect(context.send()).toBe(true)
+      expect(context.redirect()).toBe(true)
+    })
+  })
 })
