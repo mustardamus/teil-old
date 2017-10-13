@@ -1,10 +1,14 @@
+const { join } = require('path')
 const request = require('request')
 const server = require('../lib/server')
 
-const port = 14677
+const configPath = join(__dirname, '../example/teil.config.js')
+const options = {
+  port: 14677
+}
 
 beforeAll(() => {
-  return server.start(port)
+  return server.start(configPath, options)
 })
 
 afterAll(() => {
@@ -15,7 +19,7 @@ const req = (method, url) => {
   return new Promise((resolve, reject) => {
     request({
       method,
-      url: `http://localhost:${port}${url}`,
+      url: `http://localhost:${options.port}${url}`,
       json: true
     }, (err, res, body) => {
       if (err) {

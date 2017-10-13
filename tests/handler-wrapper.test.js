@@ -31,7 +31,6 @@ describe('Handler Wrapper', () => {
         expect(args.request).toBe(request)
         expect(args.reply).toBe(reply)
         expect(args.next).toBe(next)
-        expect(args.models).toEqual({})
       })
   })
 })
