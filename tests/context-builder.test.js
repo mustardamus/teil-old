@@ -49,7 +49,13 @@ describe('Context Builder', () => {
         body: true,
         params: true,
         headers: true,
-        log () { return true }
+        log: {
+          error () { return true },
+          warn () { return true },
+          info () { return true },
+          debug () { return true },
+          trace () { return true }
+        }
       },
       reply: {
         send () { return true },
@@ -62,7 +68,7 @@ describe('Context Builder', () => {
       expect(context.body).toBe(true)
       expect(context.params).toBe(true)
       expect(context.headers).toBe(true)
-      expect(context.log()).toBe(true)
+      expect(context.log.info()).toBe(true)
       expect(context.send()).toBe(true)
       expect(context.redirect()).toBe(true)
     })
