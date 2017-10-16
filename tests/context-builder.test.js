@@ -62,7 +62,7 @@ describe('Context Builder', () => {
       expect(context.body).toBe(true)
       expect(context.params).toBe(true)
       expect(context.headers).toBe(true)
-      // expect(context.log()).toBe(true)
+      expect(context.log()).toBe(true)
       expect(context.send()).toBe(true)
       expect(context.redirect()).toBe(true)
     })
