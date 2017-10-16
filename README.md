@@ -6,18 +6,18 @@
 
 Starts the `./docs` Nuxt app on [localhost:9991](http://localhost:9991).
 
-## `dev`
+### `dev`
 
 Runs `docs:dev` in parallel.
 
-## `test`
+### `test`
 
 Runs the tests.
 
-## `test:watch`
+### `test:watch`
 
 Re-run tests on file changes.
 
-## `lint`
+### `lint`
 
 Linting all the code.

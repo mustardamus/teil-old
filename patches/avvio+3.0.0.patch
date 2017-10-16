@@ -1,0 +1,17 @@
+diff --git a/node_modules/avvio/boot.js b/node_modules/avvio/boot.js
+index e594ead..6aabf73 100644
+--- a/node_modules/avvio/boot.js
++++ b/node_modules/avvio/boot.js
+@@ -109,8 +109,10 @@ function Boot (server, opts, done) {
+ inherits(Boot, EE)
+ 
+ Boot.prototype._init = function () {
+-  if (this.booted) {
+-    throw new Error('root plugin has already booted')
++  if (process.env.NODE_ENV === 'production') {
++    if (this.booted) {
++      throw new Error('root plugin has already booted')
++    }
+   }
+ 
+   if (this._current.length === 0) {
