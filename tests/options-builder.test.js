@@ -9,6 +9,7 @@ describe('Options Builder', () => {
     expect(opt.modelsGlob.includes('models/**/!(*test|*spec|*draft).js')).toBe(true)
     expect(opt.logger.level).toBe('info')
     expect(opt.logger.prettyPrint).toBe(true)
+    expect(opt.dev).toBe(true)
   })
 
   it('should overwrite the default options with a config file', () => {
