@@ -4,7 +4,10 @@ const server = require('../lib/server')
 
 const configPath = join(__dirname, '../example/teil.config.js')
 const options = {
-  port: 14677
+  port: 14677,
+  logger: {
+    level: 'silent'
+  }
 }
 
 beforeAll(() => {
