@@ -1,5 +1,5 @@
 module.exports = {
-  'GET /' ({ reply }) {
-    reply.send({ route: 'index' })
+  'GET /' ({ send }) {
+    send({ route: 'index' })
   }
 }

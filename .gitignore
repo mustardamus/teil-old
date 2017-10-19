@@ -5,3 +5,4 @@ node_modules
 temp
 coverage
 yarn-error.log
+db

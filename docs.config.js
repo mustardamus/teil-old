@@ -4,6 +4,10 @@ module.exports = {
     '@nuxtjs/markdownit'
   ],
 
+  css: [
+    'highlight.js/styles/agate.css'
+  ],
+
   srcDir: './docs',
   buildDir: './.docs',
 
@@ -19,5 +23,12 @@ module.exports = {
         }
       }
     }
+  },
+
+  markdownit: {
+    preset: 'default',
+    linkify: true,
+    breaks: true,
+    use: ['markdown-it-highlightjs']
   }
 }

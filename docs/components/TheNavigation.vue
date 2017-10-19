@@ -12,6 +12,9 @@
         <nuxt-link to="/directories/controllers">
           Controllers
         </nuxt-link>
+        <nuxt-link to="/directories/models">
+          Models
+        </nuxt-link>
       </li>
     </ul>
   </aside>
