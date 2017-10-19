@@ -1,5 +1,6 @@
 const { join } = require('path')
 const request = require('request')
+const { Types } = require('mongoose')
 const server = require('../lib/server')
 const modelsObject = require('../lib/models-object')
 const fixtures = require('./fixtures/server/data')
@@ -19,7 +20,7 @@ const options = {
 
 const dropDb = () => {
   return new Promise((resolve, reject) => {
-    return modelsObject(options.modelsGlob)
+    modelsObject(options.modelsGlob)
       .then(models => {
         const promises = Object.keys(models).map(modelName => {
           return new Promise((resolve, reject) => {
@@ -39,19 +40,9 @@ const dropDb = () => {
   })
 }
 
-beforeAll(() => {
-  return new Promise((resolve, reject) => {
-    server.start(configPath, options)
-      .then(({ app, watcher, db }) => {
-        return dropDb().then(() => resolve())
-      })
-      .catch(err => reject(err))
-  })
-})
-
-afterAll(() => {
-  server.stop()
-})
+beforeAll(() => server.start(configPath, options))
+beforeEach(() => dropDb())
+afterAll(() => server.stop())
 
 const req = (method, url, data = {}) => {
   return new Promise((resolve, reject) => {
@@ -77,51 +68,50 @@ describe('Server', () => {
     })
   })
 
-  it('should get all the users (none) in the db', () => {
-    return req('get', '/users').then(body => {
-      expect(body).toEqual([])
-    })
-  })
+  it('should have the basic CRUD operations', () => {
+    let user1
 
-  it('should create a new user', () => {
-    return req('post', '/users', fixtures.users[0]).then(body => {
-      expect(body._id).toBeTruthy()
-      expect(body.name).toBe(fixtures.users[0].name)
+    return req('get', '/users')
+      .then(body => {
+        expect(body).toEqual([])
 
-      fixtures.users[0] = body
-    })
-  })
-
-  it('should get all the users in the db', () => {
-    return req('get', '/users').then(body => {
-      expect(body.length).toBe(1)
-      expect(body[0].name).toBe(fixtures.users[0].name)
-    })
-  })
-
-  it('should get a single user', () => {
-    return req('get', `/users/${fixtures.users[0]._id}`).then(body => {
-      expect(body).toEqual(fixtures.users[0])
-    })
-  })
-
-  it('should update a single user', () => {
-    const data = { name: 'user1updated' }
-
-    return req('put', `/users/${fixtures.users[0]._id}`, data).then(body => {
-      expect(body.name).toEqual(data.name)
-
-      fixtures.users[0].name = body.name
-
-      req('get', `/users/${fixtures.users[0]._id}`).then(body => {
-        expect(body).toEqual(fixtures.users[0])
+        return req('post', '/users', fixtures.users[0])
       })
-    })
-  })
+      .then(body => {
+        expect(body._id).toBeTruthy()
+        expect(body.name).toBe(fixtures.users[0].name)
 
-  /* it('should delete a single user', () => {
-    return req('delete', `/users/${fixtures.users[0]._id}`).then(body => {
-      expect(body).toEqual({ success: true })
-    })
-  }) */
+        user1 = body
+        return req('get', '/users')
+      })
+      .then(body => {
+        expect(body.length).toBe(1)
+        expect(body[0].name).toBe(user1.name)
+
+        return req('get', `/users/${user1._id}`)
+      })
+      .then(body => {
+        expect(body).toEqual(user1)
+
+        const data = { name: 'user1updated' }
+        return req('put', `/users/${user1._id}`, data)
+      })
+      .then(body => {
+        expect(body.name).toEqual('user1updated')
+
+        return req('get', `/users/${Types.ObjectId()}`)
+      })
+      .then(body => {
+        expect(body).toEqual({
+          'error': 'Not Found',
+          'message': 'User not found',
+          'statusCode': 404
+        })
+
+        return req('delete', `/users/${user1._id}`)
+      })
+      .then(body => {
+        expect(body).toEqual({ success: true })
+      })
+  })
 })

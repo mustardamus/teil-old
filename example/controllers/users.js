@@ -2,7 +2,7 @@ module.exports = {
   'GET /' ({ User, send }) {
     User.find().exec()
       .then(users => send(users))
-      .catch(err => console.log('err', err))
+      .catch(err => send(err))
   },
 
   'GET /:id': [
@@ -11,10 +11,16 @@ module.exports = {
         id: 'string'
       }
     },
-    ({ User, send, params }) => {
+    ({ User, reply, send, params }) => {
       User.findById(params.id).exec()
-        .then(user => send(user))
-        .catch(err => console.log('err', err))
+        .then(user => {
+          if (!user) {
+            reply.code(404).send(new Error('User not found'))
+          } else {
+            send(user)
+          }
+        })
+        .catch(err => send(err))
     }
   ],
 
@@ -27,7 +33,10 @@ module.exports = {
     },
     ({ User, body, send }) => {
       const user = new User(body)
-      user.save().then(() => send(user))
+
+      user.save()
+        .then(() => send(user))
+        .catch(err => send(err))
     }
   ],
 
@@ -41,12 +50,9 @@ module.exports = {
       }
     },
     ({ User, send, params, body }) => {
-      User.findById(params.id).then(user => {
-        // use find by and update method
-        user.name = body.name
-
-        user.save().then(() => send(user))
-      })
+      User.findByIdAndUpdate(params.id, { $set: body }, { new: true })
+        .then(user => send(user))
+        .catch(err => send(err))
     }
   ],
 
@@ -57,10 +63,9 @@ module.exports = {
       }
     },
     ({ User, send, params }) => {
-      User.findById(params.id).then(user => {
-        // use find by and delete method
-        user.remove().then(() => send(user))
-      })
+      User.findByIdAndRemove(params.id)
+        .then(user => send({ success: true }))
+        .catch(err => send(err))
     }
   ]
 }
