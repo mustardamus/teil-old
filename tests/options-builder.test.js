@@ -10,12 +10,12 @@ describe('Options Builder', () => {
     expect(opt.logger.level).toBe('info')
     expect(opt.logger.prettyPrint).toBe(true)
     expect(opt.dev).toBe(true)
-    expect(opt.database).toEqual({
-      url: 'mongodb://localhost/teil',
-      mongooseOptions: {
-        useMongoClient: true
-      }
+    expect(opt.database.url).toBe('mongodb://localhost/teil')
+    expect(opt.database.mongooseOptions).toEqual({
+      useMongoClient: true
     })
+    expect(opt.database.logPath).toBeTruthy()
+    expect(opt.database.dbPath).toBeTruthy()
   })
 
   it('should overwrite the default options with a config file', () => {
