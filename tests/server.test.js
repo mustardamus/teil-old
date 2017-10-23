@@ -5,16 +5,18 @@ const server = require('../lib/server')
 const modelsObject = require('../lib/models-object')
 const fixtures = require('./fixtures/server/data')
 
-const configPath = join(__dirname, '../example/teil.config.js')
+const examplePath = join(__dirname, '../example')
+const configPath = join(examplePath, 'teil.config.js')
 const options = {
   port: 14677,
-  modelsGlob: join(__dirname, '../example/models/*.js'),
+  modelsGlob: join(examplePath, 'models/*.js'),
   logger: {
     level: 'silent'
   },
   database: {
-    // TODO pass in as option
-    url: 'mongodb://localhost/teil-test'
+    url: 'mongodb://localhost/teil-test',
+    logPath: join(examplePath, 'db/mongod.log'),
+    dbPath: join(examplePath, 'db')
   }
 }
 

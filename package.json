@@ -24,6 +24,8 @@
     "import-fresh": "^2.0.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.12.1",
+    "ps-node": "^0.1.6",
+    "shelljs": "^0.7.8",
     "valib": "^2.0.0"
   },
   "devDependencies": {
@@ -46,7 +48,6 @@
     "nuxt": "^1.0.0-rc11",
     "patch-package": "^3.5.0",
     "request": "^2.83.0",
-    "sass-loader": "^6.0.6",
-    "shelljs": "^0.7.8"
+    "sass-loader": "^6.0.6"
   }
 }
