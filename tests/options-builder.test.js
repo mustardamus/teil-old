@@ -11,11 +11,14 @@ describe('Options Builder', () => {
     expect(opt.logger.prettyPrint).toBe(true)
     expect(opt.dev).toBe(true)
     expect(opt.database.url).toBe('mongodb://localhost/teil')
-    expect(opt.database.mongooseOptions).toEqual({
+    expect(opt.database.mongoose).toEqual({
       useMongoClient: true
     })
-    expect(opt.database.logPath).toBeTruthy()
-    expect(opt.database.dbPath).toBeTruthy()
+    expect(opt.database.mongod.logpath).toBeTruthy()
+    expect(opt.database.mongod.dbpath).toBeTruthy()
+    expect(opt.database.mongod.bind_ip).toBe('127.0.0.1')
+    expect(opt.database.mongod.logappend).toBe(true)
+    expect(opt.database.mongod.fork).toBe(true)
   })
 
   it('should overwrite the default options with a config file', () => {
