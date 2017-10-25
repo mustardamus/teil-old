@@ -1,5 +1,10 @@
 module.exports = {
-  'GET /' ({ User, send }) {
+  'GET /' ({ User, send, log }) {
+    let obj = { onh: 'from url', mehr: 'so auch' }
+    obj.obj = { forr: 'baaar ' }
+    obj.yooo = obj
+
+    log.info(obj)
     User.find().exec()
       .then(users => send(users))
       .catch(err => send(err))
