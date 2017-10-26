@@ -7,9 +7,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "mongod": "mongod --config mongod.conf",
     "docs:dev": "cross-env PORT=9991 nuxt dev --config-file=docs.config.js",
-    "dev": "run-p mongod docs:dev",
+    "dev": "run-p docs:dev",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "lint": "eslint --ignore-path .gitignore .",
