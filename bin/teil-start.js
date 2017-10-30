@@ -13,8 +13,14 @@ commander
   .option('--config-file <path>')
   .parse(process.argv)
 
-if (commander.configFile) {
-  configFilePath = join(cwd, commander.configFile)
+const { configFile } = commander
+
+if (configFile) {
+  if (configFile.charAt(0) === '/') {
+    configFilePath = configFile
+  } else {
+    configFilePath = join(cwd, configFile)
+  }
 }
 
 server.start(configFilePath)
