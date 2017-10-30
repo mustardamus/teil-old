@@ -1,34 +1,12 @@
 #!/usr/bin/env node
 
-const { join } = require('path')
-const zargs = require('yargs')
-const server = require('../lib/server')
+const commander = require('commander')
+const pkg = require('../package.json')
 
-const getConfigFilePath = argv => {
-  let configFile
+commander.version(pkg.version)
 
-  if (argv['config-file']) {
-    configFile = join(process.cwd(), argv['config-file'])
-  }
+commander
+  .command('dev', 'Start the development server', { isDefault: true })
+  .command('start', 'Start the production server')
 
-  return configFile
-}
-
-const app = zargs
-  .usage('$0 <cmd> [args]')
-  .command(['dev', '$0'], 'Start development server', yargs => {}, argv => {
-    const configFile = getConfigFilePath(argv)
-    server.start(configFile)
-  })
-  .command('start', 'Start the production server', yargs => {}, argv => {
-    process.env.NODE_ENV = 'production'
-
-    const configFile = getConfigFilePath(argv)
-    server.start(configFile)
-  })
-  .option('config-file', { alias: 'c' })
-  .help()
-
-/* eslint-disable */
-app.argv
-/* eslint-enable */
+commander.parse(process.argv)
