@@ -64,9 +64,9 @@ const req = (method, url, data = {}) => {
 }
 
 describe('Server', () => {
-  it('should render the index route', () => {
+  it('should render the index.html from the static path route', () => {
     return req('get', '/').then(body => {
-      expect(body).toEqual({ route: 'index' })
+      expect(body.includes('<title>Teil - Book Store Demo</title>')).toBe(true)
     })
   })
 
