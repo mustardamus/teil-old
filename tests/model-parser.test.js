@@ -161,6 +161,12 @@ describe('Model Parser', () => {
       expect(model.virtuals[0].name).toBe('first')
       expect(typeof model.virtuals[0].get).toBe('function')
       expect(typeof model.virtuals[1].set).toBe('function')
+      expect(model.virtuals[2]).toEqual({
+        ref: 'Book',
+        localField: '_id',
+        foreignField: 'author',
+        name: 'third'
+      })
     })
   })
 
