@@ -157,7 +157,7 @@ describe('Model Parser', () => {
 
     return modelParser(path).then(model => {
       expect(Array.isArray(model.virtuals)).toBe(true)
-      expect(model.virtuals.length).toBe(2)
+      expect(model.virtuals.length).toBe(3)
       expect(model.virtuals[0].name).toBe('first')
       expect(typeof model.virtuals[0].get).toBe('function')
       expect(typeof model.virtuals[1].set).toBe('function')

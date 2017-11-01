@@ -8,18 +8,17 @@ describe('Models Object', () => {
     return modelsObject(modelsGlob)
       .then(models => {
         expect(models === Object(models)).toBe(true)
-        expect(models.User).toBeTruthy()
-        expect(models.User).toBeInstanceOf(Function)
-        expect(models.Post).toBeTruthy()
-        expect(models.Post).toBeInstanceOf(Function)
+        expect(models.Author).toBeTruthy()
+        expect(models.Author).toBeInstanceOf(Function)
+        expect(models.Book).toBeTruthy()
+        expect(models.Book).toBeInstanceOf(Function)
 
-        const user = new models.User({ name: 'me' })
-        const post = new models.Post({ title: 'Title' })
-        post.content = 'Content'
+        const author = new models.Author({ firstName: '1', lastName: '2' })
+        const book = new models.Book({ title: 'Title' })
 
-        expect(user.name).toBe('me')
-        expect(post.title).toBe('Title')
-        expect(post.content).toBe('Content')
+        expect(author.firstName).toBe('1')
+        expect(author.lastName).toBe('2')
+        expect(book.title).toBe('Title')
       })
   })
 })

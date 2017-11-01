@@ -1,47 +1,79 @@
 /* globals Vue, axios */
 
-Vue.component('app', {
-  template: `
-    <div>
-      <ul v-for="user in users">
-        <li>
-          {{user.name}}
-          <a href="#" @click.prevent="onDeleteClick(user)">Delete</a>
-        </li>
-      </ul>
+new Vue({ // eslint-disable-line
+  el: '#app',
 
-      <form @submit.prevent="onSubmit">
-        <input type="text" v-model="username" />
-      </form>
-    </div>
-  `,
   data () {
     return {
-      users: [],
-      username: ''
+      authorId: '',
+      authors: [],
+      author: {
+        firstName: '',
+        lastName: '',
+        books: []
+      },
+      books: [],
+      book: {
+        title: '',
+        author: ''
+      }
     }
   },
+
   mounted () {
-    this.getUsers()
+    this.getAuthors()
+    this.getBooks()
   },
+
   methods: {
-    getUsers () {
-      axios.get('/users').then(res => {
-        this.users = res.data
+    getAuthors () {
+      axios.get('/authors').then(res => {
+        this.authors = res.data
       })
     },
-    onSubmit () {
-      axios.post('/users', { name: this.username }).then(res => {
-        this.getUsers()
+
+    getBooks () {
+      axios.get('/books').then(res => {
+        this.books = res.data
       })
-      this.username = ''
     },
-    onDeleteClick (user) {
-      axios.delete(`/users/${user._id}`).then(res => {
-        this.getUsers()
+
+    getAll () {
+      this.getAuthors()
+      this.getBooks()
+    },
+
+    onAuthorSubmit () {
+      axios.post('/authors', this.author).then(res => {
+        this.author.firstName = ''
+        this.author.lastName = ''
+
+        this.getAll()
+      })
+    },
+
+    onBookSubmit () {
+      axios.post('/books', {
+        title: this.book.title,
+        author: this.authorId
+      }).then(res => {
+        this.book.title = ''
+        this.authorId = ''
+
+        this.getAll()
+      })
+    },
+
+    onDeleteAuthorClick (author) {
+      axios.delete(`/authors/${author._id}`).then(res => {
+        this.getAuthors()
+      })
+    },
+
+    onDeleteBookClick (book) {
+      axios.delete(`/books/${book._id}`).then(res => {
+        this.getBooks()
       })
     }
   }
 })
-
-new Vue({ el: '#app' }) // eslint-disable-line

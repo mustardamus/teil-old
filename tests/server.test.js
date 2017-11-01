@@ -71,49 +71,51 @@ describe('Server', () => {
   })
 
   it('should have the basic CRUD operations', () => {
-    let user1
+    let author1
 
-    return req('get', '/users')
+    return req('get', '/authors')
       .then(body => {
         expect(body).toEqual([])
 
-        return req('post', '/users', fixtures.users[0])
+        return req('post', '/authors', fixtures.authors[0])
       })
       .then(body => {
         expect(body._id).toBeTruthy()
-        expect(body.name).toBe(fixtures.users[0].name)
+        expect(body.firstName).toBe(fixtures.authors[0].firstName)
 
-        user1 = body
-        return req('get', '/users')
+        author1 = body
+        return req('get', '/authors')
       })
       .then(body => {
         expect(body.length).toBe(1)
-        expect(body[0].name).toBe(user1.name)
+        expect(body[0].firstName).toBe(author1.firstName)
 
-        return req('get', `/users/${user1._id}`)
+        return req('get', `/authors/${author1._id}`)
       })
       .then(body => {
-        expect(body).toEqual(user1)
+        expect(body).toEqual(author1)
 
-        const data = { name: 'user1updated' }
-        return req('put', `/users/${user1._id}`, data)
+        const data = { firstName: 'author1updated' }
+        author1.firstName = data.firstName
+
+        return req('put', `/authors/${author1._id}`, data)
       })
       .then(body => {
-        expect(body.name).toEqual('user1updated')
+        expect(body.firstName).toEqual('author1updated')
 
-        return req('get', `/users/${Types.ObjectId()}`)
+        return req('get', `/authors/${Types.ObjectId()}`)
       })
       .then(body => {
         expect(body).toEqual({
           'error': 'Not Found',
-          'message': 'User not found',
+          'message': 'Author not found',
           'statusCode': 404
         })
 
-        return req('delete', `/users/${user1._id}`)
+        return req('delete', `/authors/${author1._id}`)
       })
       .then(body => {
-        expect(body).toEqual({ success: true })
+        expect(body).toEqual(author1)
       })
   })
 })

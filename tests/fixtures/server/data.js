@@ -1,8 +1,8 @@
 module.exports = {
-  users: [
+  authors: [
     {
-      name: 'user1',
-      password: 'user1p'
+      firstName: 'Ed',
+      lastName: 'Solo'
     }
   ]
 }

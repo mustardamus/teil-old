@@ -18,6 +18,12 @@ module.exports = {
       set (val) {
         return val
       }
+    },
+
+    third: {
+      ref: 'Book',
+      localField: '_id',
+      foreignField: 'author'
     }
   }
 }
