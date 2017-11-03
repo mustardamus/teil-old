@@ -21,8 +21,7 @@ new Vue({ // eslint-disable-line
   },
 
   mounted () {
-    this.getAuthors()
-    this.getBooks()
+    this.getAll()
   },
 
   methods: {

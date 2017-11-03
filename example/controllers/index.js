@@ -1,5 +1,5 @@
 module.exports = {
-  'GET /' ({ send }) {
+  'GET /' ({ send }) { // this is overwritten by static/index.html
     send({ route: 'index' })
   }
 }
