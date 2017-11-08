@@ -32,4 +32,13 @@ describe('Use Middleware', () => {
 
     expect(() => useMiddleware(app, opt)).toThrow()
   })
+
+  it('should throw an error if a wrong argument count was detected', () => {
+    const app = { use: jest.fn() }
+    const opt = {
+      middlewaresGlob: join(fixDir, 'invalid-arguments.js')
+    }
+
+    expect(() => useMiddleware(app, opt)).toThrow()
+  })
 })
