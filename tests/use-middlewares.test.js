@@ -1,12 +1,12 @@
 const { join } = require('path')
-const useMiddleware = require('../lib/use-middleware')
+const useMiddlewares = require('../lib/use-middlewares')
 
 const fixDir = join(__dirname, 'fixtures/middlewares')
 
 describe('Use Middleware', () => {
   it('should use a single exported function', () => {
     const app = { use: jest.fn() }
-    const middlewares = useMiddleware(app, {
+    const middlewares = useMiddlewares(app, {
       middlewaresGlob: join(fixDir, 'valid-single-function.js')
     })
 
@@ -17,7 +17,7 @@ describe('Use Middleware', () => {
 
   it('should use a array of exported functions', () => {
     const app = { use: jest.fn() }
-    const middlewares = useMiddleware(app, {
+    const middlewares = useMiddlewares(app, {
       middlewaresGlob: join(fixDir, 'valid-multi-functions.js')
     })
 
@@ -33,7 +33,7 @@ describe('Use Middleware', () => {
       middlewaresGlob: join(fixDir, 'invalid-export.js')
     }
 
-    expect(() => useMiddleware(app, opt)).toThrow()
+    expect(() => useMiddlewares(app, opt)).toThrow()
   })
 
   it('should throw an error if a wrong argument count was detected', () => {
@@ -42,6 +42,6 @@ describe('Use Middleware', () => {
       middlewaresGlob: join(fixDir, 'invalid-arguments.js')
     }
 
-    expect(() => useMiddleware(app, opt)).toThrow()
+    expect(() => useMiddlewares(app, opt)).toThrow()
   })
 })
