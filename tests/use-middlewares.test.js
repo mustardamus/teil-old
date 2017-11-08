@@ -44,4 +44,13 @@ describe('Use Middleware', () => {
 
     expect(() => useMiddlewares(app, opt)).toThrow()
   })
+
+  it('should throw an arrow in an array was exported, but with no functions', () => {
+    const app = { use: jest.fn() }
+    const opt = {
+      middlewaresGlob: join(fixDir, 'invalid-export-array.js')
+    }
+
+    expect(() => useMiddlewares(app, opt)).toThrow()
+  })
 })
