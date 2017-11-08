@@ -12,6 +12,7 @@ describe('Use Middleware', () => {
 
     expect(middlewares).toEqual(['valid-single-function'])
     expect(app.use.mock.calls.length).toBe(1)
+    expect(typeof app.use.mock.calls[0][0]).toBe('function')
   })
 
   it('should use a array of exported functions', () => {
@@ -22,6 +23,8 @@ describe('Use Middleware', () => {
 
     expect(middlewares).toEqual(['valid-multi-functions'])
     expect(app.use.mock.calls.length).toBe(2)
+    expect(typeof app.use.mock.calls[0][0]).toBe('function')
+    expect(typeof app.use.mock.calls[1][0]).toBe('function')
   })
 
   it('should throw an error if no function or array was exported', () => {
