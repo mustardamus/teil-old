@@ -58,7 +58,7 @@ module.exports = {
       Author.findById(params.id).populate('books').exec()
         .then(author => {
           if (!author) {
-            reply.code(404).send(new Error('Author not found'))
+            reply.sendStatus(404)
           } else {
             send(author)
           }

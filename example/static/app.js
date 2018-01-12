@@ -26,13 +26,13 @@ new Vue({ // eslint-disable-line
 
   methods: {
     getAuthors () {
-      axios.get('/authors').then(res => {
+      axios.get('/api/authors').then(res => {
         this.authors = res.data
       })
     },
 
     getBooks () {
-      axios.get('/books').then(res => {
+      axios.get('/api/books').then(res => {
         this.books = res.data
       })
     },
@@ -43,7 +43,7 @@ new Vue({ // eslint-disable-line
     },
 
     onAuthorSubmit () {
-      axios.post('/authors', this.author).then(res => {
+      axios.post('/api/authors', this.author).then(res => {
         this.author.firstName = ''
         this.author.lastName = ''
 
@@ -52,7 +52,7 @@ new Vue({ // eslint-disable-line
     },
 
     onBookSubmit () {
-      axios.post('/books', {
+      axios.post('/api/books', {
         title: this.book.title,
         author: this.authorId
       }).then(res => {
@@ -64,13 +64,13 @@ new Vue({ // eslint-disable-line
     },
 
     onDeleteAuthorClick (author) {
-      axios.delete(`/authors/${author._id}`).then(res => {
+      axios.delete(`/api/authors/${author._id}`).then(res => {
         this.getAuthors()
       })
     },
 
     onDeleteBookClick (book) {
-      axios.delete(`/books/${book._id}`).then(res => {
+      axios.delete(`/api/books/${book._id}`).then(res => {
         this.getBooks()
       })
     }

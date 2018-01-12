@@ -50,7 +50,7 @@ const req = (method, url, data = {}) => {
   return new Promise((resolve, reject) => {
     request({
       method,
-      url: `http://localhost:${options.port}${url}`,
+      url: `http://localhost:${options.port}/api${url}`,
       json: true,
       body: data
     }, (err, res, body) => {
@@ -64,9 +64,14 @@ const req = (method, url, data = {}) => {
 }
 
 describe('Server', () => {
-  it('should render the index.html from the static path route', () => {
-    return req('get', '/').then(body => {
+  it('should render the index.html from the static path route', done => {
+    request({
+      method: 'GET',
+      url: `http://localhost:${options.port}/`
+    }, (err, res, body) => {
+      expect(err).toBeFalsy()
       expect(body.includes('<title>Teil - Book Store Demo</title>')).toBe(true)
+      done()
     })
   })
 
@@ -106,11 +111,7 @@ describe('Server', () => {
         return req('get', `/authors/${Types.ObjectId()}`)
       })
       .then(body => {
-        expect(body).toEqual({
-          'error': 'Not Found',
-          'message': 'Author not found',
-          'statusCode': 404
-        })
+        expect(body).toEqual('Not Found')
 
         return req('delete', `/authors/${author1._id}`)
       })

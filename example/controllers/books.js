@@ -15,7 +15,7 @@ module.exports = {
       Book.findById(params.id).exec()
         .then(book => {
           if (!book) {
-            reply.code(404).send(new Error('Book not found'))
+            reply.sendStatus(404)
           } else {
             send(book)
           }
