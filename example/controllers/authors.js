@@ -32,7 +32,7 @@ module.exports = {
         }
       }
     }, */
-    ({ Author, send }) => {
+    ({ Author, send, log }) => {
       Author.find().populate('books').exec()
         .then(authors => {
           // needed to actually populate the books
@@ -40,6 +40,12 @@ module.exports = {
             books = books.map(({ _id, title }) => ({ _id, title })) // TODO put that in model toJSON method
             return { _id, firstName, lastName, books }
           })
+
+          log('a simple log proxy to info')
+          log.info('explicit info', { niceoutput: true })
+          log.warn('oh oh a warning')
+          log.error('and this is an error')
+          log(new Error('should be an error too'))
 
           send(authors)
         })

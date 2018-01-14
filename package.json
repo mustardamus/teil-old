@@ -15,8 +15,8 @@
     "example": "cd example && node ../bin/teil.js"
   },
   "dependencies": {
+    "ansicolor": "^1.1.71",
     "anymatch": "^2.0.0",
-    "chalk": "^2.3.0",
     "chokidar": "^2.0.0",
     "commander": "^2.13.0",
     "express": "^4.16.2",
@@ -24,6 +24,7 @@
     "import-fresh": "^2.0.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.13.9",
+    "ololog": "^1.1.83",
     "pino": "^4.10.3",
     "ps-node": "^0.1.6",
     "shelljs": "^0.8.0",
@@ -46,7 +47,6 @@
     "node-sass": "^4.7.2",
     "npm-run-all": "^4.1.2",
     "nuxt": "^1.0.0",
-    "ololog": "^1.1.83",
     "request": "^2.83.0",
     "sass-loader": "^6.0.6"
   }
