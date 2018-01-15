@@ -10,6 +10,7 @@ describe('Helpers', () => {
     expect(makeCleanUrl('/doubleslash//')).toBe('/doubleslash')
     expect(makeCleanUrl('/good')).toBe('/good')
     expect(makeCleanUrl('  total/madness//  ')).toBe('/total/madness')
+    expect(makeCleanUrl('/')).toBe('/')
   })
 
   it('should return if a method is allowed', () => {

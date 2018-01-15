@@ -99,12 +99,4 @@ describe('Controller Parser', () => {
       })
     })
   })
-
-  it('should turn the /index route into /', () => {
-    const path = join(fixDir, 'index.js')
-
-    return controllerParser(path).then(routes => {
-      expect(routes[0].url).toBe('/')
-    })
-  })
 })

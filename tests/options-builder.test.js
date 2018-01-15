@@ -14,6 +14,7 @@ describe('Options Builder', () => {
     expect(opt.dev).toBe(true)
     expect(opt.port).toBe(3003)
     expect(opt.apiEndpoint).toBe('/api')
+    expect(opt.staticEndpoint).toBe('/')
     expect(opt.database.url).toBe('mongodb://localhost/teil')
     expect(opt.database.mongoose).toEqual({
       useMongoClient: true
