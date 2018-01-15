@@ -1,5 +1,5 @@
 module.exports = [
-  (request, reply, payload, next) => {
+  (request, response, payload, next) => {
     console.log('onSend Hook Log Payload', payload)
     next()
   }

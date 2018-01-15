@@ -12,8 +12,8 @@ module.exports = {
     ({ next }) => {
       next()
     },
-    ({ reply }) => {
-      reply.send({ success: true })
+    ({ send }) => {
+      send({ success: true })
     }
   ]
 }

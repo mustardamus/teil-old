@@ -10,7 +10,7 @@ module.exports = {
         id: 'string'
       }
     }, */
-    async ({ Book, reply, send, sendStatus, params }) => {
+    async ({ Book, send, sendStatus, params }) => {
       const book = await Book.findById(params.id).exec()
 
       if (book) {

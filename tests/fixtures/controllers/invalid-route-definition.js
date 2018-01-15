@@ -1,5 +1,5 @@
 module.exports = {
-  'GET' ({ reply }) {
-    reply.send({ success: true })
+  'GET' ({ send }) {
+    send({ success: true })
   }
 }

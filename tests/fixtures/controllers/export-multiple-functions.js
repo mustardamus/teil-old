@@ -1,13 +1,13 @@
 module.exports = {
   'GET /': [
-    (request, reply, next) => {
+    (request, response, next) => {
       next()
     },
-    (request, reply, next) => {
+    (request, response, next) => {
       next()
     },
-    (request, reply) => {
-      reply.send({ success: true })
+    (request, response) => {
+      response.send({ success: true })
     }
   ]
 }

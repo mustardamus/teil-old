@@ -6,8 +6,8 @@ module.exports = {
       params: {},
       response: {}
     },
-    ({ reply }) => {
-      reply.send({ success: true })
+    ({ send }) => {
+      send({ success: true })
     }
   ]
 }
