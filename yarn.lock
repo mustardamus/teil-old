@@ -7076,7 +7076,7 @@ stackframe@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.0.4.tgz#357b24a992f9427cba6b545d96a14ed2cbca187b"
 
-stacktracey@^1.2.96:
+stacktracey@^1.2.100, stacktracey@^1.2.96:
   version "1.2.100"
   resolved "https://registry.yarnpkg.com/stacktracey/-/stacktracey-1.2.100.tgz#9e32c7a7fa643eaf69a8f9572361339a8afb6b59"
   dependencies:

@@ -28,6 +28,7 @@
     "pino": "^4.10.3",
     "ps-node": "^0.1.6",
     "shelljs": "^0.8.0",
+    "stacktracey": "^1.2.100",
     "valib": "^2.0.0"
   },
   "devDependencies": {
