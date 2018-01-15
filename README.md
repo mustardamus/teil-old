@@ -24,7 +24,6 @@ Linting all the code.
 
 ## TODO
 
-- build correct context for express, not fastify
 - data validation via superstruct
 - response pick with lodash
 - use supertest for server test, remove request

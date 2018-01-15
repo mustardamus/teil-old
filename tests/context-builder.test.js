@@ -42,28 +42,65 @@ describe('Context Builder', () => {
     })
   })
 
-  it('should create shortcuts of common used methods', () => {
+  it('should create shortcuts of common used request fields', () => {
     const ctx = {
       request: {
+        app: true,
         query: true,
         body: true,
         params: true,
-        headers: true
+        cookies: true
       },
-      reply: {
-        send () { return true },
-        redirect () { return true }
-      }
+      other: true
     }
 
     return contextBuilder(ctx).then(context => {
+      expect(context.req).toEqual(ctx.request)
+      expect(context.app).toBe(true)
       expect(context.query).toBe(true)
       expect(context.body).toBe(true)
       expect(context.params).toBe(true)
-      expect(context.headers).toBe(true)
-      expect(typeof context.log.info).toBe('function')
-      expect(context.send()).toBe(true)
-      expect(context.redirect()).toBe(true)
+      expect(context.cookies).toBe(true)
+      expect(context.other).toBe(true)
+    })
+  })
+
+  it('should create shortcuts of common used response fields', () => {
+    const ctx = {
+      response: {
+        append: jest.fn(),
+        cookie: jest.fn(),
+        clearCookie: jest.fn(),
+        download: jest.fn(),
+        get: jest.fn(),
+        json: jest.fn(),
+        jsonp: jest.fn(),
+        redirect: jest.fn(),
+        send: jest.fn(),
+        sendFile: jest.fn(),
+        sendStatus: jest.fn(),
+        set: jest.fn(),
+        status: jest.fn()
+      },
+      other: true
+    }
+
+    return contextBuilder(ctx).then(context => {
+      expect(context.res).toEqual(ctx.response)
+      expect(typeof context.appendHeader).toBe('function')
+      expect(typeof context.setCookie).toBe('function')
+      expect(typeof context.clearCookie).toBe('function')
+      expect(typeof context.download).toBe('function')
+      expect(typeof context.getHeader).toBe('function')
+      expect(typeof context.json).toBe('function')
+      expect(typeof context.jsonp).toBe('function')
+      expect(typeof context.redirect).toBe('function')
+      expect(typeof context.send).toBe('function')
+      expect(typeof context.sendFile).toBe('function')
+      expect(typeof context.sendStatus).toBe('function')
+      expect(typeof context.setHeader).toBe('function')
+      expect(typeof context.status).toBe('function')
+      expect(context.other).toBe(true)
     })
   })
 })
