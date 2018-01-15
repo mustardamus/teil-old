@@ -25,21 +25,14 @@ new Vue({ // eslint-disable-line
   },
 
   methods: {
-    getAuthors () {
+    getAll () {
       axios.get('/api/authors').then(res => {
         this.authors = res.data
       })
-    },
 
-    getBooks () {
       axios.get('/api/books').then(res => {
         this.books = res.data
       })
-    },
-
-    getAll () {
-      this.getAuthors()
-      this.getBooks()
     },
 
     onAuthorSubmit () {
@@ -64,15 +57,11 @@ new Vue({ // eslint-disable-line
     },
 
     onDeleteAuthorClick (author) {
-      axios.delete(`/api/authors/${author._id}`).then(res => {
-        this.getAuthors()
-      })
+      axios.delete(`/api/authors/${author._id}`).then(res => this.getAll())
     },
 
     onDeleteBookClick (book) {
-      axios.delete(`/api/books/${book._id}`).then(res => {
-        this.getBooks()
-      })
+      axios.delete(`/api/books/${book._id}`).then(res => this.getAll())
     }
   }
 })

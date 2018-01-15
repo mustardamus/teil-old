@@ -29,3 +29,4 @@ Linting all the code.
 - use supertest for server test, remove request
 - properly test the handler wrapper
 - check if handler returns a promise, do error handling via .catch
+- pass in lodash to the context

@@ -1,4 +1,4 @@
-const authorSchema = {
+/* const authorSchema = {
   200: {
     type: 'object',
     properties: {
@@ -8,7 +8,7 @@ const authorSchema = {
       // books: { type: 'array' }
     }
   }
-}
+} */
 
 module.exports = {
   'GET /': [
@@ -44,44 +44,41 @@ module.exports = {
   ],
 
   'GET /:id': [
-    {
+    /* {
       params: {
         id: 'string'
       },
       response: authorSchema
-    },
-    ({ Author, reply, send, params }) => {
-      Author.findById(params.id).populate('books').exec()
-        .then(author => {
-          if (!author) {
-            reply.sendStatus(404)
-          } else {
-            send(author)
-          }
-        })
-        .catch(err => send(err))
+    }, */
+    async ({ Author, send, sendStatus, params }) => {
+      const author = await Author.findById(params.id).populate('books').exec()
+
+      if (author) {
+        send(author)
+      } else {
+        sendStatus(404)
+      }
     }
   ],
 
   'POST /': [
-    {
+    /* {
       body: {
         firstName: 'string',
         lastName: 'string'
       },
       response: authorSchema
-    },
-    ({ Author, body, send }) => {
+    }, */
+    async ({ Author, body, send }) => {
       const author = new Author(body)
 
-      author.save()
-        .then(() => send(author))
-        .catch(err => send(err))
+      await author.save()
+      send(author)
     }
   ],
 
   'PUT /:id': [
-    {
+    /* {
       params: {
         id: 'string'
       },
@@ -90,25 +87,25 @@ module.exports = {
         lastName: 'string'
       },
       response: authorSchema
-    },
-    ({ Author, send, params, body }) => {
-      Author.findByIdAndUpdate(params.id, { $set: body }, { new: true })
-        .then(author => send(author))
-        .catch(err => send(err))
+    }, */
+    async ({ Author, send, params, body }) => {
+      const author = await Author.findByIdAndUpdate(params.id, { $set: body }, { new: true })
+      send(author)
     }
   ],
 
   'DELETE /:id': [
-    {
+    /* {
       params: {
         id: 'string'
       },
       response: authorSchema
-    },
-    ({ Author, send, params }) => {
-      Author.findByIdAndRemove(params.id)
-        .then(author => send(author))
-        .catch(err => send(err))
+    }, */
+    async ({ Author, Book, send, params }) => {
+      await Author.findByIdAndRemove(params.id)
+      await Book.remove({ author: params.id })
+
+      send({ success: true })
     }
   ]
 }
