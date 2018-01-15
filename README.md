@@ -21,3 +21,10 @@ Re-run tests on file changes.
 ### `lint`
 
 Linting all the code.
+
+## TODO
+
+- if a handler throws an error, display it via error log
+- build correct context for express, not fastify
+- data validation via superstruct
+- response pick with lodash
