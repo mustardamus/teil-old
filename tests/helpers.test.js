@@ -1,5 +1,5 @@
 const {
-  makeCleanUrl, isAllowedMethod, objectToCliArgs
+  makeCleanUrl, isAllowedMethod, objectToCliArgs, removeCwd
 } = require('../lib/helpers')
 
 describe('Helpers', () => {
@@ -28,5 +28,12 @@ describe('Helpers', () => {
     })
 
     expect(cli).toBe('--dbpath "./db" --logpath "./db/mongod.log" --logappend --fork')
+  })
+
+  it('should clear strings of the current working directory', () => {
+    const fullPath = `${process.cwd()}/controllers`
+
+    expect(removeCwd(fullPath)).toBe('./controllers')
+    expect(removeCwd('./already/clear')).toBe('./already/clear')
   })
 })
