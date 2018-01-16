@@ -35,9 +35,15 @@ module.exports = {
     async ({ Author, send, log, _: { map, pick } }) => {
       const authors = await Author.find().populate('books').exec()
       const retObj = authors.map(({ _id, firstName, lastName, books }) => {
+        // here you could use .map as well, this is only an example
+        // showing how to use lodash functions
         books = map(books, book => pick(book, ['_id', 'title']))
         return { _id, firstName, lastName, books }
       })
+
+      /* const retObj = authors.map(author => {
+        return { ...author.toObject(), books: author.books }
+      }) */
 
       send(retObj)
     }
@@ -50,7 +56,7 @@ module.exports = {
       },
       response: authorSchema
     }, */
-    async ({ Author, send, sendStatus, params }) => {
+    async ({ Author, send, sendStatus, params, log }) => {
       const author = await Author.findById(params.id).populate('books').exec()
 
       if (author) {
