@@ -48,7 +48,6 @@
     "node-sass": "^4.7.2",
     "npm-run-all": "^4.1.2",
     "nuxt": "^1.0.0",
-    "request": "^2.83.0",
     "sass-loader": "^6.0.6",
     "supertest": "^3.0.0"
   }

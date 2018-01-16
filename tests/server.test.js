@@ -1,5 +1,5 @@
 const { join } = require('path')
-const request = require('request')
+const request = require('supertest')
 const { Types } = require('mongoose')
 const server = require('../lib/server')
 const modelsObject = require('../lib/models-object')
@@ -19,6 +19,8 @@ const options = {
     dbPath: join(examplePath, 'db')
   }
 }
+
+let app
 
 const dropDb = () => {
   return new Promise((resolve, reject) => {
@@ -42,83 +44,85 @@ const dropDb = () => {
   })
 }
 
-beforeAll(() => server.start(configPath, options))
+beforeAll(() => {
+  return server.start(configPath, options).then(obj => {
+    app = obj.app
+  })
+})
+
 beforeEach(() => dropDb())
 afterAll(() => server.stop())
 
-const req = (method, url, data = {}) => {
-  return new Promise((resolve, reject) => {
-    request({
-      method,
-      url: `http://localhost:${options.port}/api${url}`,
-      json: true,
-      body: data
-    }, (err, res, body) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(body, request)
-      }
-    })
-  })
-}
-
 describe('Server', () => {
-  /*
-  it('should render the index.html from the static path route', done => {
-    request({
-      method: 'GET',
-      url: `http://localhost:${options.port}/`
-    }, (err, res, body) => {
-      expect(err).toBeFalsy()
-      expect(body.includes('<title>Teil - Book Store Demo</title>')).toBe(true)
-      done()
-    })
+  it('should render the index.html from the static path route', () => {
+    return request(app).get('/')
+      .expect(200)
+      .then(({ text }) => {
+        expect(text.includes('<title>Teil - Book Store Demo</title>')).toBe(true)
+      })
   })
 
   it('should have the basic CRUD operations', () => {
-    let author1
+    const authorFixture = fixtures.authors[0]
+    const r = request(app)
 
-    return req('get', '/authors')
-      .then(body => {
+    return r.get('/api/authors')
+      .expect(200)
+      .then(({ body }) => {
         expect(body).toEqual([])
 
-        return req('post', '/authors', fixtures.authors[0])
-      })
-      .then(body => {
-        expect(body._id).toBeTruthy()
-        expect(body.firstName).toBe(fixtures.authors[0].firstName)
+        return r.post('/api/authors').send(authorFixture)
+          .expect(200)
+          .then(({ body }) => {
+            const author = body
 
-        author1 = body
-        return req('get', '/authors')
-      })
-      .then(body => {
-        expect(body.length).toBe(1)
-        expect(body[0].firstName).toBe(author1.firstName)
+            expect(body._id).toBeTruthy()
+            expect(body.firstName).toBe(authorFixture.firstName)
+            expect(body.lastName).toBe(authorFixture.lastName)
 
-        return req('get', `/authors/${author1._id}`)
-      })
-      .then(body => {
-        expect(body).toEqual(author1)
+            return r.get('/api/authors')
+              .expect(200)
+              .then(({ body }) => {
+                expect(body.length).toBe(1)
+                expect(body[0].firstName).toBe(author.firstName)
 
-        const data = { firstName: 'author1updated' }
-        author1.firstName = data.firstName
+                return r.get(`/api/authors/${author._id}`)
+                  .expect(200)
+                  .then(({ body }) => {
+                    expect(body).toEqual(author)
 
-        return req('put', `/authors/${author1._id}`, data)
-      })
-      .then(body => {
-        expect(body.firstName).toEqual('author1updated')
+                    const obj = { firstName: 'updated' }
 
-        return req('get', `/authors/${Types.ObjectId()}`)
-      })
-      .then(body => {
-        expect(body).toEqual('Not Found')
+                    return r.put(`/api/authors/${author._id}`).send(obj)
+                      .expect(200)
+                      .then(({ body }) => {
+                        expect(body._id).toBe(author._id)
+                        expect(body.firstName).toBe('updated')
+                        expect(body.lastName).toBe(author.lastName)
 
-        return req('delete', `/authors/${author1._id}`)
-      })
-      .then(body => {
-        expect(body).toEqual(author1)
+                        return r.delete(`/api/authors/${author._id}`)
+                          .expect(200)
+                          .then(({ body }) => {
+                            expect(body).toEqual({ success: true })
+
+                            return r.get('/api/authors')
+                              .expect(200)
+                              .then(({ body }) => {
+                                expect(body.length).toBe(0)
+                              })
+                          })
+                      })
+                  })
+              })
+          })
       })
   })
-  */
+
+  it('should return a 404 on non existing entry', () => {
+    return request(app).get(`/api/authors/${Types.ObjectId()}`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body).toEqual({})
+      })
+  })
 })
