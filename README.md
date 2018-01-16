@@ -25,8 +25,7 @@ Linting all the code.
 ## TODO
 
 - data validation via superstruct
-- response pick with lodash
-- use supertest for server test, remove request
+- response pick with lodash (or extending the res.send function with a wrapper)
 - properly test the handler wrapper
 - check if handler returns a promise, do error handling via .catch
 - pass in lodash to the context

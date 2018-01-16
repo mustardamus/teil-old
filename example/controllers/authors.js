@@ -32,10 +32,10 @@ module.exports = {
         }
       }
     }, */
-    async ({ Author, send, log }) => {
+    async ({ Author, send, log, _: { map, pick } }) => {
       const authors = await Author.find().populate('books').exec()
       const retObj = authors.map(({ _id, firstName, lastName, books }) => {
-        books = books.map(({ _id, title }) => ({ _id, title })) // TODO put that in model toJSON method
+        books = map(books, book => pick(book, ['_id', 'title']))
         return { _id, firstName, lastName, books }
       })
 

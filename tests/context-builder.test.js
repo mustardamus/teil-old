@@ -103,4 +103,11 @@ describe('Context Builder', () => {
       expect(context.other).toBe(true)
     })
   })
+
+  it('should include lodash as _', () => {
+    return contextBuilder().then(context => {
+      expect(context._).toBeTruthy()
+      expect(context._.isFunction).toBeTruthy()
+    })
+  })
 })
