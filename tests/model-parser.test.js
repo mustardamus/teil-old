@@ -53,14 +53,6 @@ describe('Model Parser', () => {
     })
   })
 
-  it('should throw an error if a invalid option key is given', () => {
-    const path = join(fixDir, 'options-invalid-option-key.js')
-
-    return modelParser(path).catch(err => {
-      expect(err.message.includes('has an invalid option')).toBe(true)
-    })
-  })
-
   it('should set the schema of the model given by an object', () => {
     const path = join(fixDir, 'schema-object.js')
 
