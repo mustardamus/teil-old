@@ -4,7 +4,8 @@ module.exports = {
   name: 'Post',
 
   options: {
-    collection: 'SomePosts'
+    collection: 'SomePosts',
+    read: 'secondaryPreferred'
   },
 
   schema ({ Types, validate }) {

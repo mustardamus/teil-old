@@ -41,10 +41,6 @@ module.exports = {
         return { _id, firstName, lastName, books }
       })
 
-      /* const retObj = authors.map(author => {
-        return { ...author.toObject(), books: author.books }
-      }) */
-
       send(retObj)
     }
   ],

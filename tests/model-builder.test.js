@@ -14,6 +14,8 @@ describe('Model Builder', () => {
       const model = new Model({ title: 'success' })
 
       expect(mongoose.Types.ObjectId.isValid(model._id)).toBe(true)
+      expect(Model.schema.options.collection).toBe('SomePosts')
+      expect(Model.schema.options.read.mode).toBe('secondaryPreferred')
       expect(model.title).toBe('success')
 
       model.email = 'valid@email.com'
