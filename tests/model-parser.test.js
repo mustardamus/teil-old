@@ -46,10 +46,18 @@ describe('Model Parser', () => {
   })
 
   it('should throw an error if the options does not export an object', () => {
-    const path = join(fixDir, 'options-invalid.js')
+    const path = join(fixDir, 'options-invalid-no-object.js')
 
     return modelParser(path).catch(err => {
       expect(err.message.includes('must export an Object for options')).toBe(true)
+    })
+  })
+
+  it('should throw an error if a invalid option key is given', () => {
+    const path = join(fixDir, 'options-invalid-option-key.js')
+
+    return modelParser(path).catch(err => {
+      expect(err.message.includes('has an invalid option')).toBe(true)
     })
   })
 
