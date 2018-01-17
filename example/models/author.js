@@ -4,6 +4,10 @@ module.exports = {
     lastName: String
   },
 
+  options: {
+    timestamps: true
+  },
+
   virtuals: {
     books: {
       ref: 'Book',
