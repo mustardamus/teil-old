@@ -28,4 +28,3 @@ Linting all the code.
 - response pick with lodash (or extending the res.send function with a wrapper)
 - properly test the handler wrapper
 - check if handler returns a promise, do error handling via .catch
-- set object on models that calls Schema.set
