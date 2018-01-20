@@ -99,4 +99,15 @@ describe('Controller Parser', () => {
       })
     })
   })
+
+  it('should parse the schema function with a single exported function', () => {
+    const path = join(fixDir, 'export-schema-function-single-function.js')
+
+    return controllerParser(path).then(routes => {
+      const bodySchema = routes[0].schema.body
+
+      expect(typeof bodySchema).toBe('function')
+      expect(bodySchema('neat')).toBe('neat')
+    })
+  })
 })
