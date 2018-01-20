@@ -56,7 +56,6 @@ afterAll(() => server.stop())
 describe('Server', () => {
   it('should render the index.html from the static path route', () => {
     return request(app).get('/')
-      .expect(200)
       .then(({ text }) => {
         expect(text.includes('<title>Teil - Book Store Demo</title>')).toBe(true)
       })
@@ -67,12 +66,10 @@ describe('Server', () => {
     const r = request(app)
 
     return r.get('/api/authors')
-      .expect(200)
       .then(({ body }) => {
         expect(body).toEqual([])
 
         return r.post('/api/authors').send(authorFixture)
-          .expect(200)
           .then(({ body }) => {
             const author = body
 
@@ -81,32 +78,28 @@ describe('Server', () => {
             expect(body.lastName).toBe(authorFixture.lastName)
 
             return r.get('/api/authors')
-              .expect(200)
               .then(({ body }) => {
                 expect(body.length).toBe(1)
                 expect(body[0].firstName).toBe(author.firstName)
 
                 return r.get(`/api/authors/${author._id}`)
-                  .expect(200)
                   .then(({ body }) => {
                     expect(body).toEqual(author)
 
                     const obj = { firstName: 'updated' }
 
                     return r.put(`/api/authors/${author._id}`).send(obj)
-                      .expect(200)
                       .then(({ body }) => {
                         expect(body._id).toBe(author._id)
                         expect(body.firstName).toBe('updated')
                         expect(body.lastName).toBe(author.lastName)
 
                         return r.delete(`/api/authors/${author._id}`)
-                          .expect(200)
                           .then(({ body }) => {
                             expect(body).toEqual({ success: true })
 
                             return r.get('/api/authors')
-                              .expect(200)
+
                               .then(({ body }) => {
                                 expect(body.length).toBe(0)
                               })

@@ -40,7 +40,7 @@ module.exports = {
   'POST /schema': [
     {
       body: {},
-      querystring: {},
+      query: {},
       params: {},
       response: {}
     },

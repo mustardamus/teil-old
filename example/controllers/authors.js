@@ -1,37 +1,5 @@
-/* const authorSchema = {
-  200: {
-    type: 'object',
-    properties: {
-      _id: { type: 'string' },
-      firstName: { type: 'string' },
-      lastName: { type: 'string' }
-      // books: { type: 'array' }
-    }
-  }
-} */
-
 module.exports = {
   'GET /': [
-    /* {
-      response: {
-        200: {
-          type: 'array',
-          items: {
-            type: [
-              {
-                type: 'object',
-                properties: {
-                  _id: { type: 'string' },
-                  firstName: { type: 'string' },
-                  lastName: { type: 'string' },
-                  books: { type: 'array' }
-                }
-              }
-            ]
-          }
-        }
-      }
-    }, */
     async ({ Author, send, log, _: { map, pick } }) => {
       const authors = await Author.find().populate('books').exec()
       const retObj = authors.map(author => {
@@ -53,12 +21,11 @@ module.exports = {
   ],
 
   'GET /:id': [
-    /* {
+    {
       params: {
         id: 'string'
-      },
-      response: authorSchema
-    }, */
+      }
+    },
     async ({ Author, send, sendStatus, params, log }) => {
       const author = await Author.findById(params.id).populate('books').exec()
 
@@ -71,13 +38,13 @@ module.exports = {
   ],
 
   'POST /': [
-    /* {
+    {
       body: {
         firstName: 'string',
-        lastName: 'string'
-      },
-      response: authorSchema
-    }, */
+        lastName: 'string',
+        books: 'array?'
+      }
+    },
     async ({ Author, body, send }) => {
       const author = new Author(body)
 
@@ -87,16 +54,16 @@ module.exports = {
   ],
 
   'PUT /:id': [
-    /* {
+    {
       params: {
         id: 'string'
-      },
-      body: {
-        fistName: 'string',
-        lastName: 'string'
-      },
-      response: authorSchema
-    }, */
+      }
+      /* body: { // TODO doesnt work with the tests, have a real world example
+        fistName: 'string?',
+        lastName: 'string?',
+        books: 'array?'
+      } */
+    },
     async ({ Author, send, params, body }) => {
       const author = await Author.findByIdAndUpdate(params.id, { $set: body }, { new: true })
       send(author)
@@ -104,12 +71,11 @@ module.exports = {
   ],
 
   'DELETE /:id': [
-    /* {
+    {
       params: {
         id: 'string'
-      },
-      response: authorSchema
-    }, */
+      }
+    },
     async ({ Author, Book, send, params }) => {
       await Author.findByIdAndRemove(params.id)
       await Book.remove({ author: params.id })

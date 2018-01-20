@@ -2,7 +2,7 @@ module.exports = {
   'GET /': [
     {
       body: {},
-      querystring: {},
+      query: {},
       params: {},
       response: {}
     },

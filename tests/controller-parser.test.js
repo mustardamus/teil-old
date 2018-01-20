@@ -63,8 +63,8 @@ describe('Controller Parser', () => {
     return controllerParser(path).then(routes => {
       expect(routes.length).toBe(1)
       expect(typeof routes[0].handler).toBe('function')
-      expect(Array.isArray(routes[0].beforeHandler)).toBe(true)
-      expect(routes[0].beforeHandler.length).toBe(2)
+      expect(Array.isArray(routes[0].middlewares)).toBe(true)
+      expect(routes[0].middlewares.length).toBe(2)
     })
   })
 
@@ -76,7 +76,7 @@ describe('Controller Parser', () => {
       expect(typeof routes[0].handler).toBe('function')
       expect(routes[0].schema).toEqual({
         body: {},
-        querystring: {},
+        query: {},
         params: {},
         response: {}
       })
@@ -89,11 +89,11 @@ describe('Controller Parser', () => {
     return controllerParser(path).then(routes => {
       expect(routes.length).toBe(1)
       expect(typeof routes[0].handler).toBe('function')
-      expect(Array.isArray(routes[0].beforeHandler)).toBe(true)
-      expect(routes[0].beforeHandler.length).toBe(2)
+      expect(Array.isArray(routes[0].middlewares)).toBe(true)
+      expect(routes[0].middlewares.length).toBe(2)
       expect(routes[0].schema).toEqual({
         body: {},
-        querystring: {},
+        query: {},
         params: {},
         response: {}
       })
