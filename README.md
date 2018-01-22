@@ -24,7 +24,7 @@ Linting all the code.
 
 ## TODO
 
-- data validation via custom functions
 - response pick with lodash (or extending the res.send function with a wrapper)
 - properly test the handler wrapper
 - check if handler returns a promise, do error handling via .catch
+- extend superstruct via config file
