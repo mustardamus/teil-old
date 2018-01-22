@@ -40,8 +40,8 @@ module.exports = {
   'POST /': [
     {
       body: {
-        firstName: 'string',
-        lastName: 'string',
+        firstName: 'isNotEmpty',
+        lastName: 'isNotEmpty',
         books: 'array?'
       }
     },

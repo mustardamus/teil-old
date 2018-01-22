@@ -129,6 +129,7 @@ describe('Middleware Data Validation', () => {
     expect(calls[0][0].struct).toBeTruthy()
     expect(calls[0][0].superstruct).toBeTruthy()
     expect(calls[0][0]._).toBeTruthy()
+    expect(calls[0][0].validator).toBeTruthy()
     expect(nextFn.mock.calls.length).toBe(1)
   })
 })

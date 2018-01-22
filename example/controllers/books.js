@@ -1,5 +1,3 @@
-const { Types } = require('mongoose')
-
 module.exports = {
   async 'GET /' ({ Book, send }) {
     const books = await Book.find().populate('author').exec()
@@ -25,25 +23,11 @@ module.exports = {
 
   'POST /': [
     {
-      body ({ data, _: { isString } }) {
-        // to show a this validation function, use lodash and mongoose for
-        // validating the data
-
-        if (!isString(data.title)) {
-          throw new Error('Book title must be a string')
-        }
-
-        if (data.title.length === 0) {
-          throw new Error('Book title can not be empty')
-        }
-
-        if (!isString(data.author)) {
-          throw new Error('Book author must be a string')
-        }
-
-        if (!Types.ObjectId.isValid(data.author)) {
-          throw new Error('Book author must be a ObjectId')
-        }
+      body ({ data, struct }) {
+        struct({
+          title: struct.intersection(['string', 'isNotEmpty']),
+          author: struct.intersection(['string', 'isMongoId'])
+        })(data)
       }
     },
     async ({ Book, body, send }) => {
