@@ -124,7 +124,6 @@ describe('Middleware Data Validation', () => {
     expect(calls.length).toBe(1)
     expect(calls[0][0].req).toBeTruthy()
     expect(calls[0][0].res).toBeTruthy()
-    expect(calls[0][0].next).toBeTruthy()
     expect(calls[0][0].data).toEqual(body)
     expect(calls[0][0].struct).toBeTruthy()
     expect(calls[0][0].superstruct).toBeTruthy()

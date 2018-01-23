@@ -8,6 +8,9 @@ module.exports = {
     {
       params: {
         id: 'string'
+      },
+      response ({ data, _: { pick } }) {
+        return pick(data, ['_id', 'title', 'author'])
       }
     },
     async ({ Book, send, sendStatus, params }) => {
