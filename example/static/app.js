@@ -12,11 +12,13 @@ new Vue({ // eslint-disable-line
         lastName: '',
         books: []
       },
+      authorSubmitError: '',
       books: [],
       book: {
         title: '',
         author: ''
-      }
+      },
+      bookSubmitError: ''
     }
   },
 
@@ -36,24 +38,34 @@ new Vue({ // eslint-disable-line
     },
 
     onAuthorSubmit () {
-      axios.post('/api/authors', this.author).then(res => {
-        this.author.firstName = ''
-        this.author.lastName = ''
+      this.authorSubmitError = ''
 
-        this.getAll()
-      })
+      axios.post('/api/authors', this.author)
+        .then(res => {
+          this.author.firstName = ''
+          this.author.lastName = ''
+
+          this.getAll()
+        })
+        .catch(err => {
+          this.authorSubmitError = err.response.data
+        })
     },
 
     onBookSubmit () {
-      axios.post('/api/books', {
-        title: this.book.title,
-        author: this.authorId
-      }).then(res => {
-        this.book.title = ''
-        this.authorId = ''
+      const data = { title: this.book.title, author: this.authorId }
+      this.bookSubmitError = ''
 
-        this.getAll()
-      })
+      axios.post('/api/books', data)
+        .then(res => {
+          this.book.title = ''
+          this.authorId = ''
+
+          this.getAll()
+        })
+        .catch(err => {
+          this.bookSubmitError = err.response.data
+        })
     },
 
     onDeleteAuthorClick (author) {

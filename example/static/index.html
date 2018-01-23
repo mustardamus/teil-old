@@ -24,6 +24,9 @@
               <div class="field">
                 <button type="submit" class="button is-primary is-fullwidth">Add</button>
               </div>
+              <div class="notification is-danger" v-if="authorSubmitError.length !== 0">
+                {{ authorSubmitError }}
+              </div>
             </form>
 
             <hr/>
@@ -49,6 +52,9 @@
                 </div>
                 <div class="field">
                   <button type="submit" class="button is-primary is-fullwidth">Add</button>
+                </div>
+                <div class="notification is-danger" v-if="bookSubmitError.length !== 0">
+                  {{ bookSubmitError }}
                 </div>
               </form>
             </div>

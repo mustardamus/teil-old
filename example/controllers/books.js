@@ -29,7 +29,7 @@ module.exports = {
       body ({ data, struct }) {
         struct({
           title: struct.intersection(['string', 'isNotEmpty']),
-          author: struct.intersection(['string', 'isMongoId'])
+          author: struct.intersection(['string', 'isObjectId'])
         })(data)
       }
     },
