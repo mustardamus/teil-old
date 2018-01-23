@@ -9,7 +9,7 @@
   "scripts": {
     "docs:dev": "cross-env PORT=9991 nuxt dev --config-file=docs.config.js",
     "dev": "run-p docs:dev",
-    "test": "jest -c jest.config.js",
+    "test": "jest -c jest.config.js --silent",
     "test:watch": "jest -c jest.config.js --watch",
     "lint": "eslint --ignore-path .eslintignore .",
     "example": "cd example && node ../bin/teil.js"

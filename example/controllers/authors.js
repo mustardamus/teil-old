@@ -22,6 +22,14 @@ module.exports = {
     {
       params: {
         id: 'string'
+      },
+      response: {
+        _id: 'isObjectId',
+        firstName: 'string',
+        lastName: 'string',
+        __v: 'number?',
+        updatedAt: 'date?',
+        createdAt: 'date?'
       }
     },
     async ({ Author, send, sendStatus, params, log }) => {

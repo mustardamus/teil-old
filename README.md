@@ -28,3 +28,4 @@ Linting all the code.
 - properly test the handler wrapper
 - check if handler returns a promise, do error handling via .catch
 - extend superstruct via config file
+- get rid of valib and pass on superstruct/validator/lodash to model validations
