@@ -14,7 +14,10 @@ module.exports = {
       title: { type: String, required: true },
       email: {
         type: String,
-        validate: [isEmail, '{VALUE} is not a valid e-mail']
+        validate: {
+          validator: val => isEmail(val),
+          message: '{VALUE} is not a valid e-mail'
+        }
       },
       content: {
         type: String,
