@@ -27,3 +27,4 @@ Linting all the code.
 - properly test the handler wrapper
 - check if handler returns a promise, do error handling via .catch
 - extend superstruct via config file
+- pass in log to validation functions and response function

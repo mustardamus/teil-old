@@ -1,8 +1,22 @@
 module.exports = {
-  async 'GET /' ({ Book, send }) {
-    const books = await Book.find().populate('author').exec()
-    send(books)
-  },
+  'GET /': [
+    {
+      response ({ data, _: { pick } }) {
+        return data.map(({ _id, title, author }) => {
+          return {
+            _id,
+            title,
+            author: pick(author, ['_id', 'firstName', 'lastName'])
+          }
+        })
+      }
+    },
+    ({ Book, send }) => {
+      Book.find().populate('author').exec().then(books => {
+        send(books)
+      })
+    }
+  ],
 
   'GET /:id': [
     {
