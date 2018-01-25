@@ -1,29 +1,35 @@
 module.exports = {
-  'GET /': [
-    async ({ Author, send, log, _: { map, pick } }) => {
-      const authors = await Author.find().populate('books').exec()
-      const retObj = authors.map(author => {
-        return {
-          _id: author._id.toString(), // .toString() so it logs nicely
-          firstName: author.firstName,
-          lastName: author.lastName,
-          createdAt: author.createdAt,
+  async 'GET /' ({ Author, send, log, _: { map, pick } }) {
+    const authors = await Author.find().populate('books').exec()
+    const retObj = authors.map(author => {
+      return {
+        _id: author._id.toString(), // .toString() so it logs nicely
+        firstName: author.firstName,
+        lastName: author.lastName,
+        createdAt: author.createdAt,
 
-          // here you could use .map as well, this is only an example
-          // showing how to use lodash functions
-          books: map(author.books, book => pick(book, ['_id', 'title']))
-        }
-      })
+        // here you could use .map as well, this is only an example
+        // showing how to use lodash functions
+        books: map(author.books, book => pick(book, ['_id', 'title']))
+      }
+    })
 
-      log('Sending authors...', retObj)
-      send(retObj)
-    }
-  ],
+    log('Sending authors...', retObj)
+    send(retObj)
+  },
 
   'GET /:id': [
     {
       params: {
         id: 'string'
+      },
+      response: {
+        _id: 'isObjectId',
+        firstName: 'string',
+        lastName: 'string',
+        __v: 'number?',
+        updatedAt: 'date?',
+        createdAt: 'date?'
       }
     },
     async ({ Author, send, sendStatus, params, log }) => {
@@ -40,8 +46,8 @@ module.exports = {
   'POST /': [
     {
       body: {
-        firstName: 'string',
-        lastName: 'string',
+        firstName: 'isNotEmpty',
+        lastName: 'isNotEmpty',
         books: 'array?'
       }
     },

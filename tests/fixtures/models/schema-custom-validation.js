@@ -1,18 +1,15 @@
 module.exports = {
-  schema ({ validate }) {
+  schema ({ validator: { isEmail, isURL }, _: { isString } }) {
     return {
       email: {
         type: String,
-        validate: [
-          validate.String.isEmailLike,
-          '{VALUE} is not a valid e-mail'
-        ]
+        validate: [isEmail, '{VALUE} is not a valid e-mail']
       },
 
       url: {
         type: String,
         validate: {
-          validator: val => validate.String.isUrl(val),
+          validator: val => isString(val) && isURL(val),
           message: '{VALUE is not a valid URL}'
         }
       }

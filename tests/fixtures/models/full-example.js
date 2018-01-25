@@ -8,23 +8,21 @@ module.exports = {
     read: 'secondaryPreferred'
   },
 
-  schema ({ Types, validate }) {
+  schema ({ Types, validator: { isEmail }, _: { isString } }) {
     return {
       someId: Types.ObjectId,
       title: { type: String, required: true },
       email: {
         type: String,
-        validate: [
-          validate.String.isEmailLike,
-          '{VALUE} is not a valid e-mail'
-        ]
+        validate: {
+          validator: val => isEmail(val),
+          message: '{VALUE} is not a valid e-mail'
+        }
       },
       content: {
         type: String,
         validate: {
-          validator (val) {
-            return val.length > 140
-          },
+          validator: val => isString(val) && val.length > 140,
           message: 'content must have more than 140 characters'
         }
       }

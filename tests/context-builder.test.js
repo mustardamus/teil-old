@@ -44,7 +44,7 @@ describe('Context Builder', () => {
 
   it('should create shortcuts of common used request fields', () => {
     const ctx = {
-      request: {
+      req: {
         app: true,
         query: true,
         body: true,
@@ -55,7 +55,6 @@ describe('Context Builder', () => {
     }
 
     return contextBuilder(ctx).then(context => {
-      expect(context.req).toEqual(ctx.request)
       expect(context.app).toBe(true)
       expect(context.query).toBe(true)
       expect(context.body).toBe(true)
@@ -67,7 +66,7 @@ describe('Context Builder', () => {
 
   it('should create shortcuts of common used response fields', () => {
     const ctx = {
-      response: {
+      res: {
         append: jest.fn(),
         cookie: jest.fn(),
         clearCookie: jest.fn(),
@@ -86,7 +85,6 @@ describe('Context Builder', () => {
     }
 
     return contextBuilder(ctx).then(context => {
-      expect(context.res).toEqual(ctx.response)
       expect(typeof context.appendHeader).toBe('function')
       expect(typeof context.setCookie).toBe('function')
       expect(typeof context.clearCookie).toBe('function')

@@ -1,13 +1,30 @@
 module.exports = {
-  async 'GET /' ({ Book, send }) {
-    const books = await Book.find().populate('author').exec()
-    send(books)
-  },
+  'GET /': [
+    {
+      response ({ data, _: { pick } }) {
+        return data.map(({ _id, title, author }) => {
+          return {
+            _id,
+            title,
+            author: pick(author, ['_id', 'firstName', 'lastName'])
+          }
+        })
+      }
+    },
+    ({ Book, send }) => {
+      Book.find().populate('author').exec().then(books => {
+        send(books)
+      })
+    }
+  ],
 
   'GET /:id': [
     {
       params: {
         id: 'string'
+      },
+      response ({ data, _: { pick } }) {
+        return pick(data, ['_id', 'title', 'author'])
       }
     },
     async ({ Book, send, sendStatus, params }) => {
@@ -23,9 +40,11 @@ module.exports = {
 
   'POST /': [
     {
-      body: {
-        title: 'string',
-        author: 'string'
+      body ({ data, struct }) {
+        struct({
+          title: struct.intersection(['string', 'isNotEmpty']),
+          author: struct.intersection(['string', 'isObjectId'])
+        })(data)
       }
     },
     async ({ Book, body, send }) => {
