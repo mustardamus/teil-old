@@ -2,17 +2,17 @@
   <aside class="menu">
     <ul class="menu-list">
       <li>
-        <nuxt-link to="/">Teil Documentation</nuxt-link>
+        <nuxt-link to="/">Teil Introduction</nuxt-link>
       </li>
     </ul>
 
-    <h3 class="menu-label">Directory Structure</h3>
+    <h3 class="menu-label">Guide</h3>
     <ul class="menu-list">
       <li>
-        <nuxt-link to="/directories/controllers">
+        <nuxt-link to="/guide/controllers">
           Controllers
         </nuxt-link>
-        <nuxt-link to="/directories/models">
+        <nuxt-link to="/guide/models">
           Models
         </nuxt-link>
       </li>

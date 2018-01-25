@@ -1,0 +1,1 @@
+- Dont show Models initialized log if non were initialized
