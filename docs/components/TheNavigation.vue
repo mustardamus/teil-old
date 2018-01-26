@@ -14,6 +14,9 @@
         <nuxt-link to="/guide/installation">
           Installation
         </nuxt-link>
+        <nuxt-link to="/guide/file-based-loading">
+          File Based Loading
+        </nuxt-link>
         <nuxt-link to="/guide/controllers">
           Controllers
         </nuxt-link>

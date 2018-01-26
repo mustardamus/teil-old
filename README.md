@@ -40,6 +40,43 @@ adding new routes, will be automatically applied.
 
 ### Create new routes and models by simply creating files
 
+Sketching out new routes that will be instantly available only takes a couple of
+seconds.
+
+Lets say we want to create a RESTful API for blog articles. Simply create a file
+named `articles.js` in the `controllers` directory:
+
+```javascript
+// ./controllers/articles.js
+module.exports = {
+  'GET /' ({ send }) {
+    send('Here will be a RESTful API...')
+  }
+}
+```
+
+Without the need to restart the server you can browse to
+[localhost:3003/api/articles](http://localhost:3003/api/articles) and see the
+output from above. You can change the response string and the route will
+automatically update!
+
+Creating models is equally easy. Create a file named `article.js` in the
+`models` directory:
+
+```javascript
+// ./models/article.js
+module.exports = {
+  schema: {
+    title: String,
+    content: String
+  }
+}
+```
+
+#### [Read more about File Based Loading](https://mustardamus.github.io/teil/file-based-loading)
+
+Same game, change something in the model and Teil will automatically apply the
+changes. Good bye server reload!
 
 
 - Reload routes and models on file changes
