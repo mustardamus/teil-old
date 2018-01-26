@@ -10,7 +10,7 @@ module.exports = {
         type: String,
         validate: {
           validator: val => isString(val) && isURL(val),
-          message: '{VALUE is not a valid URL}'
+          message: '{VALUE} is not a valid URL'
         }
       }
     }

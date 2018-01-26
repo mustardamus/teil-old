@@ -192,7 +192,6 @@ Let's change the `POST /` route of `./controllers/articles.js`:
 
   ({ send, body, Article }) => {
     const article = new Article(body)
-
     article.save().then(() => send(article))
   }
 ]
@@ -212,7 +211,7 @@ be empty.
 
 Lets try creating an article without content:
 
-```bash
+```shell
 curl -H "Content-Type: application/json" \
      -d '{"title":"Example Post","content":""}' \
      -X POST http://localhost:3003/api/articles
@@ -237,6 +236,77 @@ the created document:
 ```
 
 #### [Read more about Route Data Validation](https://mustardamus.github.io/teil/route-data-validation)
+
+### Data validation in model schemas
+
+Mongoose supports
+[custom validations](http://mongoosejs.com/docs/validation.html#custom-validators)
+out of the box. Teil extends this with many validations provided by
+[Validator.js](https://github.com/chriso/validator.js).
+
+Lets add a optional `authorEmail` field to the `Author` model at
+`./models/author.js`:
+
+```javascript
+// ./models/article.js
+module.exports = {
+  schema ({ validator: { isEmail } }) {
+    return {
+      title: { type: String, required: true },
+      content: { type: String, required: true },
+
+      authorEmail: {
+        type: String,
+        validate: {
+          validator: val => val.length === 0 || isEmail(val),
+          message: '{VALUE} is not a valid E-Mail'
+        }
+      }
+    }
+  }
+}
+```
+
+As you can see, the `schema` isn't an Object anymore, but a Function that is
+using destructuring again. This Function must return the schema Object.
+
+For `title` and `content` the `required` validation that Mongoose is providing
+is used.
+
+We added a new `authorEmail` field. There we make use of Mongoose's custom
+validations. On top of that we use the `isEmail` validator from Validator.js,
+and make it optional by checking the length of the string.
+
+Since we already validating data on the route, we need to extend that schema as
+well, in `./controllers/authors.js`:
+
+```javascript
+body: {
+  title: 'isNotEmpty',
+  content: 'isNotEmpty',
+  authorEmail: 'string?'
+}
+```
+
+The `?` tells Superstruct that the value of `authorEmail` is an optional String.
+
+Lets try creating an article with an invalid `authorEmail`:
+
+```shell
+curl -H "Content-Type: application/json" \
+     -d '{"title":"Example Post","content":"Example Content","authorEmail":"nope"}' \
+     -X POST http://localhost:3003/api/articles
+```
+
+This request is failing with a status code of `500` and is returning:
+
+```shell
+Article validation failed: authorEmail: nope is not a valid E-Mail
+```
+
+#### [Read more about Model Schema Validation](https://mustardamus.github.io/teil/model-schema-validation)
+
+Posting no `authorEmail` or a valid E-Mail works fine. Easy peasy.
 
 - Make use of destructuring to have tight controllers
 - Create fully fledged Mongoose models by simple objects

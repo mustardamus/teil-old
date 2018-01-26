@@ -30,6 +30,10 @@
         <nuxt-link to="/guide/route-data-validation">
           Route Data Validation
         </nuxt-link>
+        <nuxt-link to="/guide/model-schema-validation">
+          Model Schema Validation
+        </nuxt-link>
+
         <nuxt-link to="/guide/controllers">
           Controllers
         </nuxt-link>
