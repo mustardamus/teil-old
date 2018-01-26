@@ -24,6 +24,9 @@
         <nuxt-link to="/guide/models-to-controllers-wiring">
           Models To Controllers Wiring
         </nuxt-link>
+        <nuxt-link to="/guide/routes-middleware">
+          Routes Middleware
+        </nuxt-link>
         <nuxt-link to="/guide/controllers">
           Controllers
         </nuxt-link>

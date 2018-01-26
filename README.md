@@ -120,7 +120,13 @@ database.
 
 #### [Read more about Models To Controllers Wiring](https://mustardamus.github.io/teil/models-to-controllers-wiring)
 
-### Use middlewares in routes
+### Using middlewares in routes
+
+Since Teil is based on Express.js, you can use any compatible middleware,
+globally (more on that later) or for specific routes.
+
+Lets see that in action by adding a `POST /` route to the
+`./controllers/authors.js` file:
 
 ```javascript
 'POST /': [
@@ -138,10 +144,28 @@ database.
 ]
 ```
 
+As you can see, for this route we are defining an Array instead of a Function.
+Each item can be a middleware Function, the last item is the route handler.
+
+You can make use of destructuring in the middleware just as in the route
+handler, as seen in the first middleware that uses Teil's logger (more on that
+later), or use the traditional `(req, res, next)` middleware style.
+
+By the way, you can use the traditional `(req, res)` style in the route handler
+as well, however, using the destructuring style looks pretty sweet and brings
+some additional features as we will see later.
+
+Lets try out the new route by using `curl`:
+
 ```shell
 curl -H "Content-Type: application/json" \
      -X POST http://localhost:3003/api/articles
 ```
+
+You'll see a pretty log of the first, and a regular log of the second
+middleware. The server returns as expected the response string.
+
+#### [Read more about Routes Middleware](https://mustardamus.github.io/teil/routes-middleware)
 
 - Make use of destructuring to have tight controllers
 - Create fully fledged Mongoose models by simple objects
