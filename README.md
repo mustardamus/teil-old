@@ -76,7 +76,7 @@ module.exports = {
 Same game, change something in the model and Teil will automatically apply the
 changes. Good bye server reload!
 
-#### [Read more about File Based Loading](https://mustardamus.github.io/teil/file-based-loading)
+#### [Read more about Create Controllers And Models](https://mustardamus.github.io/teil/create-controllers-and-models)
 
 ### Automatically starting MongoDB
 
@@ -92,15 +92,63 @@ means everything is in one place.
 
 #### [Read more about Database Connection](https://mustardamus.github.io/teil/database-connection)
 
+### Models are instantly usable in controllers
 
-- Reload routes and models on file changes
+Now lets actually use the `Article` model in a route. We can use
+the ES2016 destructuring feature like we did with the `send` method (more on
+that later).
+
+Update the `GET /` route in `./controllers/articles.js` like so:
+
+```javascript
+'GET /' ({ send, Article }) {
+  Article.find().exec().then(articles => send(articles))
+}
+```
+
+As you can see Teil did some wiring for us and mapped the file
+`./models/article.js` to the `Article` variable.
+
+This is a
+[Mongoose Model](http://mongoosejs.com/docs/models.html) with every feature
+Mongoose provides. In this example it finds any `Article` and responds the
+result.
+
+Navigate to [localhost:3003/api/articles](http://localhost:3003/api/articles)
+and you will see an empty Array, because there are no articles yet in the
+database.
+
+#### [Read more about Models To Controllers Wiring](https://mustardamus.github.io/teil/models-to-controllers-wiring)
+
+### Use middlewares in routes
+
+```javascript
+'POST /': [
+  ({ next, log }) => { // route middlewares can use destructuring too
+    log('Route Middleware #1')
+    next()
+  },
+  (req, res, next) => { // or the traditional express.js callback style
+    console.log('Route Middleware #2')
+    next()
+  },
+  ({ send }) => {
+    send('Here will be the create endpoint...')
+  }
+]
+```
+
+```shell
+curl -H "Content-Type: application/json" \
+     -X POST http://localhost:3003/api/articles
+```
+
 - Make use of destructuring to have tight controllers
 - Create fully fledged Mongoose models by simple objects
-- Automatically wire models to controllers
 - Validate data before it hits your routes
 - Validate and alter data when its leaving your routes
 - Automatically load middleware
-- Automatically start and connect to MongoDB
+
 - Lovely logging
 - Includes ready to use libraries like Lodash, Validator.js and Superstruct
 - All configurable via a single file

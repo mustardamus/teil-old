@@ -15,11 +15,14 @@
         <nuxt-link to="/guide/installation">
           Installation
         </nuxt-link>
-        <nuxt-link to="/guide/file-based-loading">
-          File Based Loading
+        <nuxt-link to="/guide/create-controllers-and-models">
+          Create Controllers And Models
         </nuxt-link>
         <nuxt-link to="/guide/database-connection">
           Database Connection
+        </nuxt-link>
+        <nuxt-link to="/guide/models-to-controllers-wiring">
+          Models To Controllers Wiring
         </nuxt-link>
         <nuxt-link to="/guide/controllers">
           Controllers
