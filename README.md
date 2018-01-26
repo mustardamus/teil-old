@@ -167,9 +167,79 @@ middleware. The server returns as expected the response string.
 
 #### [Read more about Routes Middleware](https://mustardamus.github.io/teil/routes-middleware)
 
+### Validate data before it arrives at the route
+
+When we created the `Article` model, we didn't add any validation to it (more on
+model validation later), that means one could add an article without a `title`
+and `content`.
+
+Lets change that by validating the data that is arriving at the server. If the
+validation fails, the route handler isn't even called.
+
+Let's change the `POST /` route of `./controllers/articles.js`:
+
+```javascript
+'POST /': [
+  {
+    body: {
+      title: 'isNotEmpty',
+      content: 'isNotEmpty'
+    }
+  },
+
+  ({ next }) => next(), // middleware #1
+  (req, res, next) => next(), // middleware #2
+
+  ({ send, body, Article }) => {
+    const article = new Article(body)
+
+    article.save().then(() => send(article))
+  }
+]
+```
+
+For clarity, the middlewares have been compressed. What's new in the route
+handler (always the last item in the Array) is that we grab the `body` (the
+payload of the `POST` request) and the `Article` model. We create a new
+[Mongoose Document](http://mongoosejs.com/docs/api.html#Document), save and
+return it.
+
+Note the first Object of the Array. There we define a `body` field, which is a
+validation schema used by the
+[Superstruct](https://github.com/ianstormtaylor/superstruct) library. With the
+`isNotEmpty` rule we say that both `title` and `content` of the `body` can not
+be empty.
+
+Lets try creating an article without content:
+
+```bash
+curl -H "Content-Type: application/json" \
+     -d '{"title":"Example Post","content":""}' \
+     -X POST http://localhost:3003/api/articles
+```
+
+The request will fail with a status code of `500` and returns:
+
+```shell
+Expected a value of type `isNotEmpty` for `content` but received `""`.
+```
+
+Sweet! Lets try the same request but with some content - as expected it returns
+the created document:
+
+```javascript
+{
+  "_id":"5a6b899b03d643073d58ab2e",
+  "title":"Example Post",
+  "content":"Example Content",
+  "__v":0
+}
+```
+
+#### [Read more about Route Data Validation](https://mustardamus.github.io/teil/route-data-validation)
+
 - Make use of destructuring to have tight controllers
 - Create fully fledged Mongoose models by simple objects
-- Validate data before it hits your routes
 - Validate and alter data when its leaving your routes
 - Automatically load middleware
 

@@ -27,6 +27,9 @@
         <nuxt-link to="/guide/routes-middleware">
           Routes Middleware
         </nuxt-link>
+        <nuxt-link to="/guide/route-data-validation">
+          Route Data Validation
+        </nuxt-link>
         <nuxt-link to="/guide/controllers">
           Controllers
         </nuxt-link>
