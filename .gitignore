@@ -6,3 +6,4 @@ temp
 coverage
 yarn-error.log
 db
+docs/dist

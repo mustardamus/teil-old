@@ -1,0 +1,3 @@
+<template lang="md">
+Installation process...
+</template>

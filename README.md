@@ -1,12 +1,47 @@
 # Teil
 
-Developer friendly Node.js web framework based on Express.js. Comes with
-batteries and charger, quickly sketch an API server and get your MVP up and
-running in no-time.
+Developer friendly 'get shit done' Node.js web framework based on
+[Express.js](https://expressjs.com/) and [MongoDB](https://www.mongodb.com/) via
+[Mongoose](http://mongoosejs.com/). Comes with batteries and charger - quickly
+sketch a working API server and get your MVP up and running in no-time.
+
 
 ## Features
 
-- Create new routes and models by simply creating files
+### Get started with a new project in under a minute
+
+Initialize a new Node.js project and install Teil:
+
+```shell
+mkdir teil-blog
+cd teil-blog
+npm init -y
+npm install teil
+```
+
+Add the `dev` command to `package.json`:
+
+```javascript
+"scripts": {
+  "dev": "teil"
+}
+```
+
+And start Teil with the `dev` command:
+
+```shell
+npm run dev
+```
+
+From here on you do not need to restart the server. Every changes you make, like
+adding new routes, will be automatically applied.
+
+#### [Read more about Installation](https://mustardamus.github.io/teil/installation)
+
+### Create new routes and models by simply creating files
+
+
+
 - Reload routes and models on file changes
 - Make use of destructuring to have tight controllers
 - Create fully fledged Mongoose models by simple objects
@@ -270,12 +305,16 @@ Starts the `./docs` Nuxt app on [localhost:9991](http://localhost:9991).
 
 #### `docs:generate`
 
-Generate a static version of the documentation. TODO
+Generate a static version of the documentation.
 
 #### `docs:publish`
 
-Publish the generated documentation to `gh-pages`. TODO
+Publish the generated documentation to `gh-pages`.
 
 #### `docs`
 
-Run `docs:generate` and `docs:publish` in sequence. TODO
+Run `docs:generate` and `docs:publish` in sequence.
+
+### `example`
+
+Runs the full example in `./example`.

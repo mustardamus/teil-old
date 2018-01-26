@@ -7,10 +7,13 @@
   },
   "license": "MIT",
   "scripts": {
-    "docs:dev": "cross-env PORT=9991 nuxt dev --config-file=docs.config.js",
     "test": "jest -c jest.config.js --silent",
     "test:watch": "jest -c jest.config.js --watch",
     "lint": "eslint --ignore-path .eslintignore .",
+    "docs:dev": "cross-env PORT=9991 nuxt dev --config-file=docs.config.js",
+    "docs:generate": "nuxt generate --config-file=docs.config.js",
+    "docs:publish": "gh-pages -d docs/dist",
+    "docs": "run-s docs:generate docs:publish",
     "example": "cd example && node ../bin/teil.js"
   },
   "dependencies": {
@@ -42,6 +45,7 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "gh-pages": "^1.1.0",
     "highlight.js": "^9.12.0",
     "jest": "^22.1.4",
     "markdown-it-highlightjs": "^3.0.0",

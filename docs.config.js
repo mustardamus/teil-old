@@ -11,7 +11,12 @@ module.exports = {
   srcDir: './docs',
   buildDir: './.docs',
 
+  generate: {
+    dir: './docs/dist'
+  },
+
   router: {
+    base: '/teil/',
     linkExactActiveClass: 'is-active'
   },
 
@@ -28,7 +33,6 @@ module.exports = {
   markdownit: {
     preset: 'default',
     linkify: true,
-    breaks: true,
     use: ['markdown-it-highlightjs']
   }
 }
