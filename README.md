@@ -73,10 +73,24 @@ module.exports = {
 }
 ```
 
-#### [Read more about File Based Loading](https://mustardamus.github.io/teil/file-based-loading)
-
 Same game, change something in the model and Teil will automatically apply the
 changes. Good bye server reload!
+
+#### [Read more about File Based Loading](https://mustardamus.github.io/teil/file-based-loading)
+
+### Automatically starting MongoDB
+
+When you started Teil, there were no models and hence no database connection was
+needed. You can use Teil just fine without any database.
+
+But when you've created the `Article` model, Teil checked if you have a MongoDB
+running. If not, it would start it automatically for you by forking a new
+`mongod` process.
+
+All relevant database files are saved in your project folder under `./db`, that
+means everything is in one place.
+
+#### [Read more about Database Connection](https://mustardamus.github.io/teil/database-connection)
 
 
 - Reload routes and models on file changes

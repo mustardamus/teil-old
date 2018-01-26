@@ -1,5 +1,6 @@
 <template>
   <aside class="menu">
+    <h3 class="menu-label">Version {{ version }}</h3>
     <ul class="menu-list">
       <li>
         <nuxt-link to="/">
@@ -17,6 +18,9 @@
         <nuxt-link to="/guide/file-based-loading">
           File Based Loading
         </nuxt-link>
+        <nuxt-link to="/guide/database-connection">
+          Database Connection
+        </nuxt-link>
         <nuxt-link to="/guide/controllers">
           Controllers
         </nuxt-link>
@@ -27,3 +31,13 @@
     </ul>
   </aside>
 </template>
+
+<script>
+import { version } from '../../package.json'
+
+export default {
+  data () {
+    return { version }
+  }
+}
+</script>
