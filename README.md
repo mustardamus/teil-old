@@ -348,10 +348,60 @@ the `virtuals` option of
 
 #### [Read more about Model Declaration](https://mustardamus.github.io/teil/guide/model-declaration)
 
+### Validate and alter response data before it's leaving the route
+
+Since we now have the `excerpt` field, we don't necessarily want to return the
+`content` of an article when listing all articles. Let's edit the `GET /` route
+of `./controllers/articles.js` like this:
+
+```javascript
+'GET /': [
+  {
+    response ({ data, _: { pick }}) {
+      return data.map(article => pick(article, ['_id', 'title', 'excerpt']))
+    }
+  },
+
+  ({ send, Article }) => {
+    Article.find().exec().then(articles => send(articles))
+  }
+]
+```
+
+The `GET /` Function became an Array. The validation schema Object is the first
+item of that Array, the route handler Function is the second.
+
+Here we could have defined an Object for the `response` validation schema, like
+we saw before with `body`. Instead we pass an custom method. Via destructuring
+we pick the `data` (that is the data that we responded with `send()`) as well as
+the [pick](https://lodash.com/docs/4.17.4#pick) method of Lodash.
+
+We map over each article and pick only the `_id`, `title` and `excerpt` fields.
+Then we return the newly Array.
+
+As stated before, this is an additional feature of the destructured `send()`
+method. It would not work with the regular `res.send()` or `res.json()` of
+Express.js.
+
+When we navigate to the
+[localhost:3003/api/articles](http://localhost:3003/api/articles) URL we will
+see the trimmed down articles:
+
+```javascript
+[
+  {
+    "_id": "5a6b90d303d643073d58ab39",
+    "title": "Example Post",
+    "excerpt": "Example Content..."
+  }
+]
+```
+
+This is a super neat way of staying in control which data is leaving your API.
+
+#### [Read more about Validate And Alter Response Data](https://mustardamus.github.io/teil/guide/validate-and-alter-response-data)
 
 - Make use of destructuring to have tight controllers
-- Create fully fledged Mongoose models by simple objects
-- Validate and alter data when its leaving your routes
 - Automatically load middleware
 - Lovely logging
 - Includes ready to use libraries like Lodash, Validator.js and Superstruct

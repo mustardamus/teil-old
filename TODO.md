@@ -1,1 +1,2 @@
 - Dont show Models initialized log if non were initialized
+- inlcude log in model schema validation

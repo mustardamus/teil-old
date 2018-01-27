@@ -36,6 +36,11 @@
         <nuxt-link to="/guide/model-declaration">
           Model Declaration
         </nuxt-link>
+        <nuxt-link to="/guide/validate-and-alter-response-data">
+          Validate And Alter Response Data
+        </nuxt-link>
+
+        
 
         <nuxt-link to="/guide/controllers">
           Controllers
