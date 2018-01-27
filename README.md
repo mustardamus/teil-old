@@ -36,7 +36,7 @@ npm run dev
 From here on you do not need to restart the server. Every changes you make, like
 adding new routes, will be automatically applied.
 
-#### [Read more about Installation](https://mustardamus.github.io/teil/installation)
+#### [Read more about Installation](https://mustardamus.github.io/teil/guide/installation)
 
 ### Create new routes and models by simply creating files
 
@@ -76,7 +76,7 @@ module.exports = {
 Same game, change something in the model and Teil will automatically apply the
 changes. Good bye server reload!
 
-#### [Read more about Create Controllers And Models](https://mustardamus.github.io/teil/create-controllers-and-models)
+#### [Read more about Create Controllers And Models](https://mustardamus.github.io/teil/guide/create-controllers-and-models)
 
 ### Automatically starting MongoDB
 
@@ -90,7 +90,7 @@ running. If not, it would start it automatically for you by forking a new
 All relevant database files are saved in your project folder under `./db`, that
 means everything is in one place.
 
-#### [Read more about Database Connection](https://mustardamus.github.io/teil/database-connection)
+#### [Read more about Database Connection](https://mustardamus.github.io/teil/guide/database-connection)
 
 ### Models are instantly usable in controllers
 
@@ -118,7 +118,7 @@ Navigate to [localhost:3003/api/articles](http://localhost:3003/api/articles)
 and you will see an empty Array, because there are no articles yet in the
 database.
 
-#### [Read more about Models To Controllers Wiring](https://mustardamus.github.io/teil/models-to-controllers-wiring)
+#### [Read more about Models To Controllers Wiring](https://mustardamus.github.io/teil/guide/models-to-controllers-wiring)
 
 ### Using middlewares in routes
 
@@ -165,7 +165,7 @@ curl -H "Content-Type: application/json" \
 You'll see a pretty log of the first, and a regular log of the second
 middleware. The server returns as expected the response string.
 
-#### [Read more about Routes Middleware](https://mustardamus.github.io/teil/routes-middleware)
+#### [Read more about Routes Middleware](https://mustardamus.github.io/teil/guide/routes-middleware)
 
 ### Validate data before it arrives at the route
 
@@ -235,7 +235,7 @@ the created document:
 }
 ```
 
-#### [Read more about Route Data Validation](https://mustardamus.github.io/teil/route-data-validation)
+#### [Read more about Route Data Validation](https://mustardamus.github.io/teil/guide/route-data-validation)
 
 ### Data validation in model schemas
 
@@ -304,18 +304,81 @@ This request is failing with a status code of `500` and is returning:
 Article validation failed: authorEmail: nope is not a valid E-Mail
 ```
 
-#### [Read more about Model Schema Validation](https://mustardamus.github.io/teil/model-schema-validation)
-
 Posting no `authorEmail` or a valid E-Mail works fine. Easy peasy.
+
+#### [Read more about Model Schema Validation](https://mustardamus.github.io/teil/guide/model-schema-validation)
+
+### Create fully fledged Mongoose models by simple declarative objects
+
+Mongoose models are powerful. Teil adds some abstraction to all the features and
+makes it pretty simple to define fully fledged models.
+
+Lets add a [virtual field](http://mongoosejs.com/docs/api.html#Virtualtype)
+`excerpt` for example by adding this to `./models/article.js`:
+
+```javascript
+virtuals: {
+  excerpt: {
+    get () {
+      if (typeof this.content === 'string') {
+        return this.content.substr(0, 140) + '...'
+      }
+    }
+  }
+},
+
+options: {
+  toObject: { virtuals: true }
+}
+```
+
+Here `virtuals` is an Object that holds all virtual fields, the key name is also
+the name of the virtual field, `excerpt` in this example. This field has a
+getter, represented by the `get()` method.
+
+In this method we check if the type `content` of the document (`this`) is a
+String (remember, we've created articles without content), and if so, return
+the first 140 characters of the `content` value.
+
+Below the `virtuals` there is an `options` Object defined. We want the excerpt
+to be included when we return the document in JSON format. Therefore we set
+the `virtuals` option of
+[toObject](http://mongoosejs.com/docs/api.html#document_Document-toObject) to
+`true`.
+
+#### [Read more about Model Declaration](https://mustardamus.github.io/teil/guide/model-declaration)
+
 
 - Make use of destructuring to have tight controllers
 - Create fully fledged Mongoose models by simple objects
 - Validate and alter data when its leaving your routes
 - Automatically load middleware
-
 - Lovely logging
 - Includes ready to use libraries like Lodash, Validator.js and Superstruct
 - All configurable via a single file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Create a simple Blog in 5 minutes

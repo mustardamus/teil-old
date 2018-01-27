@@ -33,6 +33,9 @@
         <nuxt-link to="/guide/model-schema-validation">
           Model Schema Validation
         </nuxt-link>
+        <nuxt-link to="/guide/model-declaration">
+          Model Declaration
+        </nuxt-link>
 
         <nuxt-link to="/guide/controllers">
           Controllers
