@@ -39,14 +39,23 @@
         <nuxt-link to="/guide/validate-and-alter-response-data">
           Validate And Alter Response Data
         </nuxt-link>
-
-        
-
-        <nuxt-link to="/guide/controllers">
-          Controllers
+        <nuxt-link to="/guide/route-handler-context">
+          Route Handler Context
         </nuxt-link>
-        <nuxt-link to="/guide/models">
-          Models
+        <nuxt-link to="/guide/global-middleware">
+          Global Middleware
+        </nuxt-link>
+        <nuxt-link to="/guide/static-files">
+          Static Files
+        </nuxt-link>
+        <nuxt-link to="/guide/lovely-logging">
+          Lovely Logging
+        </nuxt-link>
+        <nuxt-link to="/guide/single-file-configuration">
+          Single File Configuration
+        </nuxt-link>
+        <nuxt-link to="/guide/extended-superstruct">
+          Extended Superstruct
         </nuxt-link>
       </li>
     </ul>
