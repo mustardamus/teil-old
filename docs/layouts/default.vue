@@ -1,11 +1,15 @@
 <template>
   <div class="container">
-    <div class="columns">
+    <div class="columns is-gapless">
       <div class="column is-3">
-        <the-navigation id="navigation" />
+        <div id="navigation">
+          <the-navigation  />
+        </div>
       </div>
       <div class="column">
-        <nuxt id="content" class="content" />
+        <div id="content">
+          <nuxt class="content" />
+        </div>
       </div>
     </div>
   </div>
@@ -20,6 +24,24 @@ export default {
 </script>
 
 <style lang="sass">
+html, body
+  background: #eee
+
+html, body, #__nuxt, #__layout, #navigation, #content
+  height: 100%
+
 #navigation, #content
-  margin-top: 30px
+  overflow: scroll
+  position: fixed
+
+#content
+  background: white
+  border-left: 5px solid #ddd
+
+  .content
+    margin: 30px
+
+#navigation
+  .menu
+    margin: 30px 0
 </style>
