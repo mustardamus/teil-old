@@ -444,6 +444,22 @@ itself to `models.Article`.
 
 ### Automatically load global middleware
 
+We used middlewares on routes before, but we also can extend our app easily with
+global middleware. Again, just create the files and Teil will take care of
+loading the middleware.
+
+Lets say we want to log headers for any request. Create the file
+`./middlewares/log-headers.js`:
+
+```javascript
+module.exports = (req, res, next) => {
+  console.log('Log Headers Middleware', req.headers)
+  next()
+}
+```
+
+Teil will automatically load and apply the middleware.
+
 #### [Read more about Global Middleware](https://mustardamus.github.io/teil/guide/global-middleware)
 
 ### Automatically serving static files
