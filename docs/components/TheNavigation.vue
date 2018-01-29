@@ -7,41 +7,58 @@
           Teil Introduction
         </nuxt-link>
       </li>
-    </ul>
-
-    <h3 class="menu-label">Guide</h3>
-    <ul class="menu-list">
       <li>
         <nuxt-link to="/guide/installation">
           Installation
         </nuxt-link>
-        <nuxt-link to="/guide/create-controllers-and-models">
-          Create Controllers And Models
-        </nuxt-link>
-        <nuxt-link to="/guide/database-connection">
-          Database Connection
-        </nuxt-link>
-        <nuxt-link to="/guide/models-to-controllers-wiring">
-          Models To Controllers Wiring
+      </li>
+    </ul>
+
+    <h3 class="menu-label">Controllers</h3>
+    <ul class="menu-list">
+      <li>
+        <nuxt-link to="/guide/create-controllers-and-models#controllers">
+          Create Controllers (route definitions)
         </nuxt-link>
         <nuxt-link to="/guide/routes-middleware">
           Routes Middleware
         </nuxt-link>
+        <nuxt-link to="/guide/route-handler-context">
+          Route Handler Context
+        </nuxt-link>
         <nuxt-link to="/guide/route-data-validation">
           Route Data Validation
-        </nuxt-link>
-        <nuxt-link to="/guide/model-schema-validation">
-          Model Schema Validation
-        </nuxt-link>
-        <nuxt-link to="/guide/model-declaration">
-          Model Declaration
         </nuxt-link>
         <nuxt-link to="/guide/validate-and-alter-response-data">
           Validate And Alter Response Data
         </nuxt-link>
-        <nuxt-link to="/guide/route-handler-context">
-          Route Handler Context
+      </li>
+    </ul>
+
+    <h3 class="menu-label">Models</h3>
+    <ul class="menu-list">
+      <li>
+        <nuxt-link to="/guide/database-connection">
+          Database Connection
         </nuxt-link>
+        <nuxt-link to="/guide/create-controllers-and-models#models">
+          Create Models
+        </nuxt-link>
+        <nuxt-link to="/guide/model-declaration">
+          Model Declaration
+        </nuxt-link>
+        <nuxt-link to="/guide/models-to-controllers-wiring">
+          Models To Controllers Wiring
+        </nuxt-link>
+        <nuxt-link to="/guide/model-schema-validation">
+          Model Schema Validation
+        </nuxt-link>
+      </li>
+    </ul>
+
+    <h3 class="menu-label">Misc</h3>
+    <ul class="menu-list">
+      <li>
         <nuxt-link to="/guide/global-middleware">
           Global Middleware
         </nuxt-link>
