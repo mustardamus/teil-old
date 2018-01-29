@@ -403,6 +403,43 @@ This is a super neat way of staying in control which data is leaving your API.
 
 ### Tight controllers by using destructuring
 
+In the examples above you've seen that the
+[Destructuring](http://exploringjs.com/es6/ch_destructuring.html) feature of
+ES2016 is used in the route middlewares and handlers (also in other places, like
+custom model schema validation).
+
+That way you can have tight controllers and pick only the Objects and Functions
+you'll need. Lets add a `PUT /:id` route to update an article in
+`./controllers/articles.js`:
+
+```javascript
+'PUT /:id' ({ params, body, send, sendStatus, log, Article }) {
+  Article.findByIdAndUpdate(params.id, { $set: body }, { new: true })
+    .then(article => {
+      if (!article) {
+        return sendStatus(404)
+      }
+
+      log('Found Article:', article._id.toString(), article.title)
+      send(article)
+    })
+    .catch(() => sendStatus(500))
+}
+```
+
+The route callback handler accepts either two arguments, that is the traditional
+`(req, res)` Express.js way, or one argument which is an Object. Instead of
+referencing the Object again ad again, we use destructuring to pick only the
+things we need.
+
+The `params` Object is an alias for `req.params`, same as `body` for `req.body`.
+Methods have short aliases too, like `sendStatus()` is the same as
+`res.sendStatus()`. There are many more shortcuts to Express.js specific things.
+
+The context is also extended with other useful things, like a `log`, or any
+model that you've created - `Article` in this example, which is also a shortcut
+itself to `models.Article`.
+
 #### [Read more about Route Handler Context](https://mustardamus.github.io/teil/guide/route-handler-context)
 
 ### Automatically load global middleware
