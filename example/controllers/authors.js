@@ -18,6 +18,15 @@ module.exports = {
     send(retObj)
   },
 
+  'GET /failing' ({ Author, send, log }) {
+    // this is an example on how promises that are not returned will still be logged
+    Author.find().populate('books').exec().then(authors => {
+      log('This will crash in 3.. 2.. 1..')
+      methodDoesNotExist() // eslint-disable-line
+      send(authors)
+    })
+  },
+
   'GET /:id': [
     {
       params: {

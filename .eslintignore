@@ -7,3 +7,4 @@ coverage
 yarn-error.log
 db
 example/static/vendor
+docs/dist
