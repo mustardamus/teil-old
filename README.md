@@ -460,6 +460,22 @@ module.exports = (req, res, next) => {
 
 Teil will automatically load and apply the middleware.
 
+Middlewares are loaded in alphabetical order of the files. If you want multiple
+middlewares to load before any other, you could create a file
+`./middlewares/_init.js` for example:
+
+```javascript
+module.exports = [
+  require('helmet')(),
+  require('cors')()
+]
+```
+
+Note that we export an Array of 3rd party middlewares instead of a single
+middleware Function. With the underscore in the filename `_init.js`, this file
+is loaded before any other, and you can control the order of the middlewares
+in the Array.
+
 #### [Read more about Global Middleware](https://mustardamus.github.io/teil/guide/global-middleware)
 
 ### Automatically serving static files
