@@ -480,6 +480,22 @@ in the Array.
 
 ### Automatically serving static files
 
+As of now we are only serving JSON via API endpoints. But Teil also lets you
+easily serve static files. Lets create the file `./static/index.html`:
+
+```html
+<html>
+  <body>
+    Here could be a single page application...
+  </body>
+</html>
+```
+
+Now, if you navigate to [localhost:3003](http://localhost:3003) you will see the
+output of the `index.html`. You could extend that file to load the
+frontend-framework of your choice and build a single page application that is
+consuming the API.
+
 #### [Read more about Static Files](https://mustardamus.github.io/teil/guide/static-files)
 
 ### Lovely logging
