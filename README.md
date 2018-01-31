@@ -504,6 +504,25 @@ consuming the API.
 
 ### All configurable via a single config file
 
+Until this point we didn't configure anything and used Teil out of the box. We
+used the default folders `controllers`, `models` and `static`, for example.
+
+However, there are certain things you most definitely want to configure however
+you like. Teil looks for the file `./teil.config.js` in the root of you project
+folder. Let's create it:
+
+```javascript
+module.exports = {
+  database: {
+    url: 'mongodb://localhost/my-project'
+  }
+}
+```
+
+This will overwrite the default MongoDB URL with
+`mongodb://localhost/my-project`. There are many more things to configure, not
+just certain values but also methods.
+
 #### [Read more about Single File Configuration](https://mustardamus.github.io/teil/guide/single-file-configuration)
 
 ### And some more features to save you time
