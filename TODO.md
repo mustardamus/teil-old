@@ -4,3 +4,5 @@
 - also use context in middleware callback if no (req, res, next) is exported
 - state that promises must be returned in routes
 - rename "dev" option to "isDev"
+- add test for middleware parser and loader
+- add host option, print in server
