@@ -30,12 +30,17 @@ describe('Options Builder', () => {
 
     expect(opt.controllersGlob.includes('example/controllers/*.js')).toBe(true)
     expect(opt.modelsGlob.includes('example/models/*.js')).toBe(true)
+    expect(opt.database.url).toBe('mongodb://localhost/teil-test')
   })
 
   it('should overwrite the default and config options with passed in custom options', () => {
     const configPath = join(__dirname, '../example/teil.config.js')
-    const opt = optionsBuilder(configPath, { modelsGlob: '*.js' })
+    const opt = optionsBuilder(configPath, {
+      modelsGlob: '*.js',
+      database: { url: 'works' }
+    })
 
     expect(opt.modelsGlob).toBe('*.js')
+    expect(opt.database.url).toBe('works')
   })
 })
