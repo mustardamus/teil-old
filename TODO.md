@@ -4,4 +4,3 @@
 - also use context in middleware callback if no (req, res, next) is exported
 - state that promises must be returned in routes
 - rename "dev" option to "isDev"
-- test deep merge of options
