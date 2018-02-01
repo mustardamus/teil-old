@@ -21,6 +21,8 @@ if (configFile) {
   } else {
     configFilePath = join(cwd, configFile)
   }
+} else {
+  configFilePath = join(cwd, 'teil.config.js')
 }
 
 server.start(configFilePath)
