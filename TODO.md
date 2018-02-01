@@ -1,4 +1,3 @@
-- Dont show Models initialized log if non were initialized
 - inlcude log in model schema validation
 - .use new middleware once loaded
 - watch and init static file serving
