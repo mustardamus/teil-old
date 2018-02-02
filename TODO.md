@@ -1,8 +1,6 @@
 - inlcude log in model schema validation
-- .use new middleware once loaded
-- watch and init static file serving
 - also use context in middleware callback if no (req, res, next) is exported
 - state that promises must be returned in routes
 - rename "dev" option to "isDev"
-- add test for middleware parser and loader
 - add host option, print in server
+- dont log static stuff when reloading middleware
