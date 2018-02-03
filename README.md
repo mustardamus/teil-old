@@ -527,6 +527,11 @@ just certain values but also methods.
 
 ### And some more features to save you time
 
+We used Superstruct in the data validations before. Out of the box it comes with
+validations for the basic types, like `string` and `boolean`. Teil supercharges
+the it with the validations that Validator.js provides, like `isURL` or
+`isEmail`.
+
 #### [Read more about Extended Superstruct](https://mustardamus.github.io/teil/guide/extended-superstruct)
 
 
