@@ -11,7 +11,7 @@ describe('Options Builder', () => {
     expect(opt.hooksGlob.includes('hooks/**/!(*test|*spec|*draft).js')).toBe(true)
     expect(opt.logger.level).toBe('info')
     expect(opt.logger.prettyPrint).toBe(true)
-    expect(opt.dev).toBe(true)
+    expect(opt.isDev).toBe(true)
     expect(opt.port).toBe(3003)
     expect(opt.apiEndpoint).toBe('/api')
     expect(opt.staticEndpoint).toBe('/')
