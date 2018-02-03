@@ -1,7 +1,6 @@
-- Dont show Models initialized log if non were initialized
 - inlcude log in model schema validation
-- .use new middleware once loaded
-- watch and init static file serving
 - also use context in middleware callback if no (req, res, next) is exported
 - state that promises must be returned in routes
-- merge deep with default options
+- rename "dev" option to "isDev"
+- add host option, print in server
+- dont log static stuff when reloading middleware
