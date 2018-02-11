@@ -1,5 +1,4 @@
 - inlcude log in model schema validation
 - also use context in middleware callback if no (req, res, next) is exported
 - state that promises must be returned in routes
-- add host option, print in server
 - dont log static stuff when reloading middleware

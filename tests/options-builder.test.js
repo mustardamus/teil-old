@@ -12,6 +12,7 @@ describe('Options Builder', () => {
     expect(opt.logger.level).toBe('info')
     expect(opt.logger.olologOptions).toEqual({})
     expect(opt.isDev).toBe(true)
+    expect(opt.host).toBe('0.0.0.0')
     expect(opt.port).toBe(3003)
     expect(opt.apiEndpoint).toBe('/api')
     expect(opt.staticEndpoint).toBe('/')
