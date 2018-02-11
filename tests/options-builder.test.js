@@ -47,4 +47,15 @@ describe('Options Builder', () => {
     expect(opt.modelsGlob).toBe('*.js')
     expect(opt.database.url).toBe('works')
   })
+
+  it('should use environment variables for certain options', () => {
+    process.env.HOST = 'localhost'
+    process.env.PORT = 9898
+    process.env.DBURL = 'mongod://localhost/custom'
+    const opt = optionsBuilder()
+
+    expect(opt.host).toBe(process.env.HOST)
+    expect(opt.port).toBe(process.env.PORT)
+    expect(opt.database.url).toBe(process.env.DBURL)
+  })
 })
