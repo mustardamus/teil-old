@@ -8,7 +8,7 @@ module.exports = async function (moduleOptions) {
 
   const cwd = process.cwd()
   const configFile = join(cwd, 'teil.config.js')
-  const handler = await middleware(configFile)
+  const handler = await middleware(configFile, moduleOptions)
 
   this.addServerMiddleware({ path: '/', handler })
 }
