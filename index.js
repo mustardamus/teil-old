@@ -1,6 +1,7 @@
 const { join } = require('path')
-const { merge } = require('lodash')
-const middleware = require('./lib/middleware')
+const { merge, isFunction } = require('lodash')
+const optionsBuilder = require('./lib/options-builder')
+const initMain = require('./lib/init-main')
 
 module.exports = async function (moduleOptions) {
   if (!this.nuxt) {
@@ -8,7 +9,7 @@ module.exports = async function (moduleOptions) {
   }
 
   const cwd = process.cwd()
-  const configFile = join(cwd, 'teil.config.js')
+  const configPath = join(cwd, 'teil.config.js')
   const { srcDir } = this.options
   const jsGlob = '!(*test|*spec|*draft).js'
   const defaultOptions = {
@@ -18,7 +19,23 @@ module.exports = async function (moduleOptions) {
     middlewaresGlob: join(srcDir, 'server-middleware/**', jsGlob)
   }
   const customOptions = merge({}, defaultOptions, moduleOptions)
-  const handler = await middleware(configFile, customOptions)
+  const options = optionsBuilder(configPath, customOptions)
+  const { app, watcher, db } = await initMain(options)
 
-  this.addServerMiddleware({ path: '/', handler })
+  const closeConnections = () => {
+    if (watcher && isFunction(watcher.close)) {
+      watcher.close()
+    }
+
+    if (db && isFunction(db.close)) {
+      db.close()
+    }
+
+    process.exit()
+  }
+
+  process.on('exit', closeConnections)
+  process.on('SIGINT', closeConnections)
+
+  this.addServerMiddleware({ path: '/', handler: app._router })
 }

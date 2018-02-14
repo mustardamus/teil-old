@@ -1,7 +1,7 @@
 {
   "name": "teil",
   "version": "0.1.0",
-  "main": "lib/teil.js",
+  "main": "index.js",
   "bin": {
     "teil": "bin/teil.js"
   },
