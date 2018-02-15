@@ -89,13 +89,21 @@
           <div class="column">
             <h2 class="title is-3">Books</h2>
 
-            <ul v-for="book in books">
-              <li>
-                <span class="name">{{book.title}}</span>
-                <span>by {{book.author.firstName}} {{book.author.lastName}}</span>
-                <a href="#" @click.prevent="onDeleteBookClick(book)">Delete</a>
-              </li>
-            </ul>
+            <div class="card" v-for="book in books">
+              <header class="card-header">
+                <p class="card-header-title">
+                  {{book.title}}
+                </p>
+              </header>
+              <div class="card-content">
+                Written by {{book.author.firstName}} {{book.author.lastName}}
+              </div>
+              <footer class="card-footer">
+                <a class="card-footer-item" @click="onBookDetailsClick(book)">Details</a>
+                <a class="card-footer-item" @click="onBookEditClick(book)">Edit</a>
+                <a class="card-footer-item" @click="onBookDeleteClick(book)">Delete</a>
+              </footer>
+            </div>
           </div>
         </div>
       </div>
@@ -150,6 +158,52 @@
               </div>
               <div class="notification is-danger" v-if="authorEditError.length !== 0">
                 {{ authorEditError }}
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+
+      <div :class="{ modal: true, 'is-active': bookModalDetailsActive }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              {{bookShow.title}}
+            </p>
+            <button class="delete" aria-label="close" @click="bookModalDetailsActive = false"></button>
+          </header>
+          <section class="modal-card-body content">
+            <ul>
+              <li>ID: {{bookShow._id}}</li>
+              <li>Created At: {{bookShow.createdAt}}</li>
+              <li>Updated At: {{bookShow.updatedAt}}</li>
+              <li>Author: {{bookShow.author.firstName}} {{bookShow.author.lastName}}</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+
+      <div :class="{ modal: true, 'is-active': bookModalEditActive }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              {{bookShow.title}}
+            </p>
+            <button class="delete" aria-label="close" @click="bookModalEditActive = false"></button>
+          </header>
+          <section class="modal-card-body content">
+            <form @submit.prevent="onBookEditSubmit">
+              <div class="field">
+                <label class="label">Title</label>
+                <input class="input" type="text" v-model="bookEdit.title" />
+              </div>
+              <div class="field">
+                <button class="button is-primary is-fullwidth">Save</button>
+              </div>
+              <div class="notification is-danger" v-if="bookEditError.length !== 0">
+                {{ bookEditError }}
               </div>
             </form>
           </section>

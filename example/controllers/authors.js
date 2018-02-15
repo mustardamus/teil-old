@@ -49,6 +49,7 @@ module.exports = {
         lastName: 'isNotEmpty'
       }
     },
+
     async ({ Author, body, send }) => {
       const author = new Author(body)
 
@@ -67,6 +68,7 @@ module.exports = {
         lastName: 'isNotEmpty?'
       }
     },
+
     async ({ Author, params, body, send }) => {
       const author = await Author.findByIdAndUpdate(params.id, { $set: body }, { new: true })
       send(author)
@@ -79,6 +81,7 @@ module.exports = {
         id: 'string'
       }
     },
+
     async ({ Author, Book, params, send }) => {
       await Author.findByIdAndRemove(params.id)
       await Book.remove({ author: params.id })

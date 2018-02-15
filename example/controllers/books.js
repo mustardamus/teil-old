@@ -2,19 +2,16 @@ module.exports = {
   'GET /': [
     {
       response ({ data, _: { pick } }) {
-        return data.map(({ _id, title, author }) => {
-          return {
-            _id,
-            title,
-            author: pick(author, ['_id', 'firstName', 'lastName'])
-          }
-        })
+        return data.map(book => ({
+          ...pick(book, ['_id', 'title']),
+          author: pick(book.author, ['_id', 'firstName', 'lastName'])
+        }))
       }
     },
-    ({ Book, send }) => {
-      Book.find().populate('author').exec().then(books => {
-        send(books)
-      })
+
+    async ({ Book, send }) => {
+      const books = await Book.find().populate('author').exec()
+      send(books)
     }
   ],
 
@@ -24,11 +21,15 @@ module.exports = {
         id: 'string'
       },
       response ({ data, _: { pick } }) {
-        return pick(data, ['_id', 'title', 'author'])
+        return {
+          ...pick(data, ['_id', 'title', 'createdAt', 'updatedAt']),
+          author: pick(data.author, ['_id', 'firstName', 'lastName'])
+        }
       }
     },
+
     async ({ Book, send, sendStatus, params }) => {
-      const book = await Book.findById(params.id).exec()
+      const book = await Book.findById(params.id).populate('author').exec()
 
       if (book) {
         send(book)
@@ -40,13 +41,12 @@ module.exports = {
 
   'POST /': [
     {
-      body ({ data, struct }) {
-        struct({
-          title: struct.intersection(['string', 'isNotEmpty']),
-          author: struct.intersection(['string', 'isObjectId'])
-        })(data)
+      body: {
+        title: 'isNotEmpty',
+        author: 'isObjectId'
       }
     },
+
     async ({ Book, body, send }) => {
       const book = new Book(body)
 
@@ -59,12 +59,12 @@ module.exports = {
     {
       params: {
         id: 'string'
+      },
+      body: {
+        title: 'isNotEmpty?'
       }
-      /* body: {
-        title: 'string',
-        authorId: 'string'
-      } */
     },
+
     async ({ Book, send, params, body }) => {
       const book = await Book.findByIdAndUpdate(params.id, { $set: body }, { new: true })
       send(book)
@@ -77,6 +77,7 @@ module.exports = {
         id: 'string'
       }
     },
+
     async ({ Book, send, params }) => {
       await Book.findByIdAndRemove(params.id)
       send({ success: true })

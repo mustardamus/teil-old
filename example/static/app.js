@@ -9,17 +9,19 @@ new Vue({ // eslint-disable-line
       authors: [],
       authorSubmit: { firstName: '', lastName: '' },
       authorEdit: { firstName: '', lastName: '' },
-      authorShow: { firstName: '', lastName: '', createdAt: '', books: [] },
+      authorShow: { firstName: '', lastName: '', createdAt: '', updatedAt: '', books: [] },
       authorSubmitError: '',
       authorEditError: '',
       authorModalDetailsActive: false,
       authorModalEditActive: false,
       books: [],
-      bookSubmit: {
-        title: '',
-        author: ''
-      },
-      bookSubmitError: ''
+      bookSubmit: { title: '', author: '' },
+      bookEdit: { title: '' },
+      bookShow: { title: '', createdAt: '', updatedAt: '', author: { firstName: '', lastName: '' } },
+      bookSubmitError: '',
+      bookEditError: '',
+      bookModalDetailsActive: false,
+      bookModalEditActive: false
     }
   },
 
@@ -104,8 +106,37 @@ new Vue({ // eslint-disable-line
         })
     },
 
-    onDeleteBookClick (book) {
+    onBookDeleteClick (book) {
       axios.delete(`/api/books/${book._id}`).then(res => this.getAll())
+    },
+
+    onBookDetailsClick (book) {
+      axios.get(`/api/books/${book._id}`).then(res => {
+        this.bookShow = res.data
+        this.bookModalDetailsActive = true
+      })
+    },
+
+    onBookEditClick (book) {
+      axios.get(`/api/books/${book._id}`).then(res => {
+        this.bookShow = res.data
+        this.bookEdit.title = res.data.title
+        this.bookModalEditActive = true
+      })
+    },
+
+    onBookEditSubmit () {
+      const title = this.bookEdit.title
+
+      axios.put(`/api/books/${this.bookShow._id}`, { title })
+        .then(res => {
+          this.bookModalEditActive = false
+          this.bookEditError = ''
+          this.getAll()
+        })
+        .catch(err => {
+          this.bookEditError = err.response.data
+        })
     }
   }
 })
