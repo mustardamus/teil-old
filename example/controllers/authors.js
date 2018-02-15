@@ -25,7 +25,7 @@ module.exports = {
       },
       response ({ data, _: { pick } }) {
         return {
-          ...pick(data, ['_id', 'firstName', 'lastName', 'createdAt']),
+          ...pick(data, ['_id', 'firstName', 'lastName', 'createdAt', 'updatedAt']),
           books: data.books.map(book => pick(book, ['_id', 'title']))
         }
       }
@@ -61,12 +61,11 @@ module.exports = {
     {
       params: {
         id: 'string'
+      },
+      body: {
+        firstName: 'isNotEmpty?',
+        lastName: 'isNotEmpty?'
       }
-      /* body: { // TODO doesnt work with the tests, have a real world example
-        fistName: 'string?',
-        lastName: 'string?',
-        books: 'array?'
-      } */
     },
     async ({ Author, params, body, send }) => {
       const author = await Author.findByIdAndUpdate(params.id, { $set: body }, { new: true })

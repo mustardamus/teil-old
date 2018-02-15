@@ -80,6 +80,7 @@
               </div>
               <footer class="card-footer">
                 <a class="card-footer-item" @click="onAuthorDetailsClick(author)">Details</a>
+                <a class="card-footer-item" @click="onAuthorEditClick(author)">Edit</a>
                 <a class="card-footer-item" @click="onAuthorDeleteClick(author)">Delete</a>
               </footer>
             </div>
@@ -99,17 +100,21 @@
         </div>
       </div>
 
-      <div :class="{ modal: true, 'is-active': authorModalActive }">
+      <div :class="{ modal: true, 'is-active': authorModalDetailsActive }">
         <div class="modal-background"></div>
         <div class="modal-card">
           <header class="modal-card-head">
             <p class="modal-card-title">
               {{authorShow.firstName}} {{authorShow.lastName}}
             </p>
-            <button class="delete" aria-label="close" @click="authorModalActive = false"></button>
+            <button class="delete" aria-label="close" @click="authorModalDetailsActive = false"></button>
           </header>
           <section class="modal-card-body content">
-            Created At: {{authorShow.createdAt}}
+            <ul>
+              <li>ID: {{authorShow._id}}</li>
+              <li>Created At: {{authorShow.createdAt}}</li>
+              <li>Updated At: {{authorShow.updatedAt}}</li>
+            </ul>
             <hr />
             <h4>Books</h4>
             <ul>
@@ -117,6 +122,36 @@
                 {{book.title}}
               </li>
             </ul>
+          </section>
+        </div>
+      </div>
+
+      <div :class="{ modal: true, 'is-active': authorModalEditActive }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              {{authorShow.firstName}} {{authorShow.lastName}}
+            </p>
+            <button class="delete" aria-label="close" @click="authorModalEditActive = false"></button>
+          </header>
+          <section class="modal-card-body content">
+            <form @submit.prevent="onAuthorEditSubmit">
+              <div class="field">
+                <label class="label">First Name</label>
+                <input class="input" type="text" v-model="authorEdit.firstName" />
+              </div>
+              <div class="field">
+                <label class="label">Last Name</label>
+                <input class="input" type="text" v-model="authorEdit.lastName" />
+              </div>
+              <div class="field">
+                <button class="button is-primary is-fullwidth">Save</button>
+              </div>
+              <div class="notification is-danger" v-if="authorEditError.length !== 0">
+                {{ authorEditError }}
+              </div>
+            </form>
           </section>
         </div>
       </div>

@@ -8,9 +8,12 @@ new Vue({ // eslint-disable-line
       authorId: '',
       authors: [],
       authorSubmit: { firstName: '', lastName: '' },
+      authorEdit: { firstName: '', lastName: '' },
       authorShow: { firstName: '', lastName: '', createdAt: '', books: [] },
       authorSubmitError: '',
-      authorModalActive: false,
+      authorEditError: '',
+      authorModalDetailsActive: false,
+      authorModalEditActive: false,
       books: [],
       bookSubmit: {
         title: '',
@@ -73,8 +76,32 @@ new Vue({ // eslint-disable-line
     onAuthorDetailsClick (author) {
       axios.get(`/api/authors/${author._id}`).then(res => {
         this.authorShow = res.data
-        this.authorModalActive = true
+        this.authorModalDetailsActive = true
       })
+    },
+
+    onAuthorEditClick (author) {
+      axios.get(`/api/authors/${author._id}`).then(res => {
+        this.authorShow = res.data
+        this.authorEdit.firstName = res.data.firstName
+        this.authorEdit.lastName = res.data.lastName
+        this.authorModalEditActive = true
+      })
+    },
+
+    onAuthorEditSubmit () {
+      const firstName = this.authorEdit.firstName
+      const lastName = this.authorEdit.lastName
+
+      axios.put(`/api/authors/${this.authorShow._id}`, { firstName, lastName })
+        .then(res => {
+          this.authorModalEditActive = false
+          this.authorEditError = ''
+          this.getAll()
+        })
+        .catch(err => {
+          this.authorEditError = err.response.data
+        })
     },
 
     onDeleteBookClick (book) {
