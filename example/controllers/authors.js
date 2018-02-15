@@ -1,48 +1,37 @@
+
 module.exports = {
-  async 'GET /' ({ Author, send, log, _: { map, pick } }) {
-    const authors = await Author.find().populate('books').exec()
-    const retObj = authors.map(author => {
-      return {
-        _id: author._id.toString(), // .toString() so it logs nicely
-        firstName: author.firstName,
-        lastName: author.lastName,
-        createdAt: author.createdAt,
-
-        // here you could use .map as well, this is only an example
-        // showing how to use lodash functions
-        books: map(author.books, book => pick(book, ['_id', 'title']))
+  'GET /': [
+    {
+      response ({ data, _: { pick } }) {
+        return data.map(author => ({
+          ...pick(author, ['_id', 'firstName', 'lastName']),
+          bookCount: author.books.length
+        }))
       }
-    })
+    },
 
-    log('Sending authors...', retObj)
-    send(retObj)
-  },
+    async ({ Author, log, send }) => {
+      const authors = await Author.find().populate('books').exec()
 
-  'GET /failing' ({ Author, send, log }) {
-    // this is an example on how promises that are not returned and fail will
-    // still be logged
-    Author.find().populate('books').exec().then(authors => {
-      log('This will crash in 3.. 2.. 1..')
-      methodDoesNotExist() // eslint-disable-line
+      log(`Sending back ${authors.length} authors...`)
       send(authors)
-    })
-  },
+    }
+  ],
 
   'GET /:id': [
     {
       params: {
         id: 'string'
       },
-      response: {
-        _id: 'isObjectId',
-        firstName: 'string',
-        lastName: 'string',
-        __v: 'number?',
-        updatedAt: 'date?',
-        createdAt: 'date?'
+      response ({ data, _: { pick } }) {
+        return {
+          ...pick(data, ['_id', 'firstName', 'lastName', 'createdAt']),
+          books: data.books.map(book => pick(book, ['_id', 'title']))
+        }
       }
     },
-    async ({ Author, send, sendStatus, params, log }) => {
+
+    async ({ Author, params, send, sendStatus }) => {
       const author = await Author.findById(params.id).populate('books').exec()
 
       if (author) {
@@ -57,8 +46,7 @@ module.exports = {
     {
       body: {
         firstName: 'isNotEmpty',
-        lastName: 'isNotEmpty',
-        books: 'array?'
+        lastName: 'isNotEmpty'
       }
     },
     async ({ Author, body, send }) => {
@@ -80,7 +68,7 @@ module.exports = {
         books: 'array?'
       } */
     },
-    async ({ Author, send, params, body }) => {
+    async ({ Author, params, body, send }) => {
       const author = await Author.findByIdAndUpdate(params.id, { $set: body }, { new: true })
       send(author)
     }
@@ -92,11 +80,21 @@ module.exports = {
         id: 'string'
       }
     },
-    async ({ Author, Book, send, params }) => {
+    async ({ Author, Book, params, send }) => {
       await Author.findByIdAndRemove(params.id)
       await Book.remove({ author: params.id })
 
       send({ success: true })
     }
-  ]
+  ],
+
+  'GET /failing' ({ Author, send, log }) {
+    // this is an example on how promises that are not returned and fail will
+    // still be logged, but dont respond to the client
+    Author.find().populate('books').exec().then(authors => {
+      log('This will crash in 3.. 2.. 1..')
+      methodDoesNotExist() // eslint-disable-line
+      send(authors)
+    })
+  }
 }

@@ -5,6 +5,12 @@
     <meta charset="utf-8">
     <title>Teil - Book Store Demo</title>
     <link rel="stylesheet" href="vendor/bulma.min.css">
+
+    <style media="screen">
+      .card {
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
 
   <body>
@@ -16,10 +22,10 @@
 
             <form @submit.prevent="onAuthorSubmit">
               <div class="field">
-                <input class="input" type="text" v-model="author.firstName" placeholder="First Name" />
+                <input class="input" type="text" v-model="authorSubmit.firstName" placeholder="First Name" />
               </div>
               <div class="field">
-                <input class="input" type="text" v-model="author.lastName" placeholder="Last Name" />
+                <input class="input" type="text" v-model="authorSubmit.lastName" placeholder="Last Name" />
               </div>
               <div class="field">
                 <button type="submit" class="button is-primary is-fullwidth">Add</button>
@@ -36,7 +42,7 @@
 
               <form @submit.prevent="onBookSubmit">
                 <div class="field">
-                  <input class="input" type="text" v-model="book.title" placeholder="Title" />
+                  <input class="input" type="text" v-model="bookSubmit.title" placeholder="Title" />
                 </div>
                 <div class="field">
                   <div class="control">
@@ -63,18 +69,20 @@
           <div class="column">
             <h2 class="title is-3">Authors</h2>
 
-            <ul v-for="author in authors">
-              <li>
-                <h3 class="title is-4">
-                  <span>{{author.firstName}} {{author.lastName}}</span>
-                  <a href="#" @click.prevent="onDeleteAuthorClick(author)">Delete</a>
-                </h3>
-
-                <ul v-for="book in author.books">
-                  <li>{{book.title}}</li>
-                </ul>
-              </li>
-            </ul>
+            <div class="card" v-for="author in authors">
+              <header class="card-header">
+                <p class="card-header-title">
+                  {{author.firstName}} {{author.lastName}}
+                </p>
+              </header>
+              <div class="card-content">
+                Has published {{author.bookCount}} books.
+              </div>
+              <footer class="card-footer">
+                <a class="card-footer-item" @click="onAuthorDetailsClick(author)">Details</a>
+                <a class="card-footer-item" @click="onAuthorDeleteClick(author)">Delete</a>
+              </footer>
+            </div>
           </div>
 
           <div class="column">
@@ -88,6 +96,28 @@
               </li>
             </ul>
           </div>
+        </div>
+      </div>
+
+      <div :class="{ modal: true, 'is-active': authorModalActive }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              {{authorShow.firstName}} {{authorShow.lastName}}
+            </p>
+            <button class="delete" aria-label="close" @click="authorModalActive = false"></button>
+          </header>
+          <section class="modal-card-body content">
+            Created At: {{authorShow.createdAt}}
+            <hr />
+            <h4>Books</h4>
+            <ul>
+              <li v-for="book in authorShow.books">
+                {{book.title}}
+              </li>
+            </ul>
+          </section>
         </div>
       </div>
     </div>

@@ -7,14 +7,12 @@ new Vue({ // eslint-disable-line
     return {
       authorId: '',
       authors: [],
-      author: {
-        firstName: '',
-        lastName: '',
-        books: []
-      },
+      authorSubmit: { firstName: '', lastName: '' },
+      authorShow: { firstName: '', lastName: '', createdAt: '', books: [] },
       authorSubmitError: '',
+      authorModalActive: false,
       books: [],
-      book: {
+      bookSubmit: {
         title: '',
         author: ''
       },
@@ -40,10 +38,10 @@ new Vue({ // eslint-disable-line
     onAuthorSubmit () {
       this.authorSubmitError = ''
 
-      axios.post('/api/authors', this.author)
+      axios.post('/api/authors', this.authorSubmit)
         .then(res => {
-          this.author.firstName = ''
-          this.author.lastName = ''
+          this.authorSubmit.firstName = ''
+          this.authorSubmit.lastName = ''
 
           this.getAll()
         })
@@ -53,12 +51,12 @@ new Vue({ // eslint-disable-line
     },
 
     onBookSubmit () {
-      const data = { title: this.book.title, author: this.authorId }
+      const data = { title: this.bookSubmit.title, author: this.authorId }
       this.bookSubmitError = ''
 
       axios.post('/api/books', data)
         .then(res => {
-          this.book.title = ''
+          this.bookSubmit.title = ''
           this.authorId = ''
 
           this.getAll()
@@ -68,8 +66,15 @@ new Vue({ // eslint-disable-line
         })
     },
 
-    onDeleteAuthorClick (author) {
-      axios.delete(`/api/authors/${author._id}`).then(res => this.getAll())
+    onAuthorDeleteClick (author) {
+      axios.delete(`/api/authors/${author._id}`).then(() => this.getAll())
+    },
+
+    onAuthorDetailsClick (author) {
+      axios.get(`/api/authors/${author._id}`).then(res => {
+        this.authorShow = res.data
+        this.authorModalActive = true
+      })
     },
 
     onDeleteBookClick (book) {

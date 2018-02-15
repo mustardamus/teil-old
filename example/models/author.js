@@ -5,7 +5,8 @@ module.exports = {
   },
 
   options: {
-    timestamps: true
+    timestamps: true,
+    toObject: { getters: true }
   },
 
   virtuals: {
