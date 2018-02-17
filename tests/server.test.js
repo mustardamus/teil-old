@@ -84,9 +84,10 @@ describe('Server', () => {
 
                 return r.get(`/api/authors/${author._id}`)
                   .then(({ body }) => {
-                    expect(body).toEqual(author)
+                    expect(body._id).toEqual(author._id)
+                    expect(body.firstName).toBe(author.firstName)
 
-                    const obj = { firstName: 'updated' }
+                    const obj = { firstName: 'updated', lastName: author.lastName }
 
                     return r.put(`/api/authors/${author._id}`).send(obj)
                       .then(({ body }) => {
