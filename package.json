@@ -1,6 +1,6 @@
 {
   "name": "teil",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "lib/nuxt-module.js",
   "bin": {
     "teil": "bin/teil.js"
