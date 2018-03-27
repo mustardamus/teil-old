@@ -19,6 +19,7 @@ describe('Options Builder', () => {
     expect(opt.staticPath).toBe(join(process.cwd(), 'static'))
     expect(opt.staticOptions).toEqual({})
     expect(opt.jsonOptions).toEqual({})
+    expect(opt.expressSettings).toEqual({})
     expect(opt.database.url).toBe('mongodb://localhost/teil')
     expect(opt.database.mongoose).toEqual({})
     expect(opt.database.mongod.logpath).toBeTruthy()
