@@ -14,6 +14,16 @@ jest.mock('express', () => {
   }
 })
 
+jest.mock('connect-mongo', () => {
+  return () => {}
+})
+
+jest.mock('express-session', opt => {
+  return () => {
+    return { middleware: 'session', opt }
+  }
+})
+
 describe('Middleware Reload', () => {
   it('should reload just the middleware of the router stack', () => {
     const app = {
@@ -24,6 +34,7 @@ describe('Middleware Reload', () => {
     }
     const options = {
       middlewaresGlob: join(__dirname, 'fixtures/middlewares/valid-*.js'),
+      modelsGlob: join(__dirname, 'nope'),
       staticEndpoint: '/static-endpoint',
       staticPath: join(__dirname, '../example/static')
     }
@@ -35,15 +46,16 @@ describe('Middleware Reload', () => {
       expect(stack[0]).toBe('query')
       expect(stack[1]).toBe('expressInit')
       expect(stack[2]).toBe('router')
-      expect(calls.length).toBe(4)
+      expect(calls.length).toBe(5)
       expect(calls[0][0]).toBe('/static-endpoint')
       expect(calls[0][1].middleware).toBe('static')
       expect(calls[1][0].middleware).toBe('json')
-      expect(calls[2][0].length).toBe(2) // fixtures/middlewares/valid-multi-functions.js
-      expect(isFunction(calls[2][0][0])).toBe(true)
-      expect(isFunction(calls[2][0][1])).toBe(true)
-      expect(calls[3][0].length).toBe(1) // fixtures/middlewares/valid-single-function.js
+      expect(calls[2][0].middleware).toBe('session')
+      expect(calls[3][0].length).toBe(2) // fixtures/middlewares/valid-multi-functions.js
       expect(isFunction(calls[3][0][0])).toBe(true)
+      expect(isFunction(calls[3][0][1])).toBe(true)
+      expect(calls[4][0].length).toBe(1) // fixtures/middlewares/valid-single-function.js
+      expect(isFunction(calls[4][0][0])).toBe(true)
     })
   })
 })

@@ -27,6 +27,14 @@ describe('Options Builder', () => {
     expect(opt.database.mongod.bind_ip).toBe('127.0.0.1')
     expect(opt.database.mongod.logappend).toBe(true)
     expect(opt.database.mongod.fork).toBe(true)
+    expect(opt.sessionOptions).toEqual({
+      secret: 'SET THIS IN PRODUCTION!',
+      maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+      resave: false,
+      saveUninitialized: true,
+      secure: false,
+      storeOptions: {}
+    })
   })
 
   it('should overwrite the default options with a config file', () => {
@@ -52,11 +60,11 @@ describe('Options Builder', () => {
   it('should use environment variables for certain options', () => {
     process.env.HOST = 'localhost'
     process.env.PORT = 9898
-    process.env.DBURL = 'mongod://localhost/custom'
+    process.env.DATABASE_URL = 'mongod://localhost/custom'
     const opt = optionsBuilder()
 
     expect(opt.host).toBe(process.env.HOST)
     expect(opt.port).toBe(process.env.PORT)
-    expect(opt.database.url).toBe(process.env.DBURL)
+    expect(opt.database.url).toBe(process.env.DATABASE_URL)
   })
 })
