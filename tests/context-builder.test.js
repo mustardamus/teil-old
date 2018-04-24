@@ -110,4 +110,18 @@ describe('Context Builder', () => {
       expect(context._.isFunction).toBeTruthy()
     })
   })
+
+  it('should extend the context with an object defined in the options', () => {
+    const ctx = { org: true }
+    const options = {
+      extendContext: {
+        extended: true
+      }
+    }
+
+    return contextBuilder(ctx, options).then(context => {
+      expect(context.org).toBe(true)
+      expect(context.extended).toBe(true)
+    })
+  })
 })
