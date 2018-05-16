@@ -17,7 +17,9 @@ module.exports = {
         validate: {
           validator: val => isEmail(val),
           message: '{VALUE} is not a valid e-mail'
-        }
+        },
+        unique: true,
+        sparse: true
       },
       content: {
         type: String,

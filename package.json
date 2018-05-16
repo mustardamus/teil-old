@@ -29,6 +29,7 @@
     "import-fresh": "^2.0.0",
     "lodash": "^4.17.5",
     "mongoose": "^5.0.16",
+    "mongoose-beautiful-unique-validation": "^7.1.1",
     "ololog": "^1.1.87",
     "ps-node": "^0.1.6",
     "shelljs": "^0.8.1",
