@@ -5,10 +5,6 @@ module.exports = {
   modelsGlob: join(__dirname, './models/*.js'),
   staticPath: join(__dirname, './static'),
 
-  database: {
-    url: 'mongodb://localhost/teil-test'
-  },
-
   expressSettings: {
     'trust proxy': true
   }

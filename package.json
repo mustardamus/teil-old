@@ -1,6 +1,6 @@
 {
   "name": "teil",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "main": "lib/nuxt-module.js",
   "bin": {
     "teil": "bin/teil.js"
@@ -23,6 +23,7 @@
     "chokidar": "^2.0.3",
     "commander": "^2.15.1",
     "connect-mongo": "^2.0.1",
+    "dotenv-extended": "^2.0.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "glob": "^7.1.2",
