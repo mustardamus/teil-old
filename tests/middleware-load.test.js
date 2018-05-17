@@ -31,7 +31,7 @@ describe('Middleware Load', () => {
   it('should load the express.json middleware by default', () => {
     const app = { use: jest.fn() }
     const options = {
-      middlewaresGlob: 'non-existend',
+      middlewaresGlobalGlob: 'non-existend',
       modelsGlob: 'nope'
     }
 
@@ -47,7 +47,7 @@ describe('Middleware Load', () => {
   it('should load the express.static middleware if a static folder exists', () => {
     const app = { use: jest.fn() }
     const options = {
-      middlewaresGlob: 'non-existend',
+      middlewaresGlobalGlob: 'non-existend',
       staticEndpoint: '/static-endpoint',
       staticPath: join(__dirname, '../example/static'),
       modelsGlob: 'nope'
@@ -67,7 +67,7 @@ describe('Middleware Load', () => {
   it('should load the middlewares from a glob', () => {
     const app = { use: jest.fn() }
     const options = {
-      middlewaresGlob: join(__dirname, 'fixtures/middlewares/valid-*.js'),
+      middlewaresGlobalGlob: join(__dirname, 'fixtures/middlewares/valid-*.js'),
       staticEndpoint: '/static-endpoint',
       staticPath: join(__dirname, '../example/static'),
       modelsGlob: 'nope'
@@ -92,7 +92,7 @@ describe('Middleware Load', () => {
   it('should use a mongo store if a database connection exists', () => {
     const app = { use: jest.fn() }
     const options = {
-      middlewaresGlob: 'non-existend',
+      middlewaresGlobalGlob: 'non-existend',
       modelsGlob: join(__dirname, 'fixtures/models/full-example.js'),
       sessionOptions: {
         storeOptions: {}

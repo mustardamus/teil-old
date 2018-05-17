@@ -7,7 +7,8 @@ describe('Options Builder', () => {
 
     expect(opt.controllersGlob.includes('controllers/**/!(*test|*spec|*draft).js')).toBe(true)
     expect(opt.modelsGlob.includes('models/**/!(*test|*spec|*draft).js')).toBe(true)
-    expect(opt.middlewaresGlob.includes('middlewares/**/!(*test|*spec|*draft).js')).toBe(true)
+    expect(opt.middlewaresGlobalGlob.includes('middlewares/**/!(_*)!(*test|*spec|*draft).js')).toBe(true)
+    expect(opt.middlewaresLocalGlob.includes('middlewares/**/(_*)!(*test|*spec|*draft).js')).toBe(true)
     // expect(opt.hooksGlob.includes('hooks/**/!(*test|*spec|*draft).js')).toBe(true)
     expect(opt.logger.level).toBe('info')
     expect(opt.logger.olologOptions).toEqual({})

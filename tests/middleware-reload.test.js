@@ -33,7 +33,7 @@ describe('Middleware Reload', () => {
       }
     }
     const options = {
-      middlewaresGlob: join(__dirname, 'fixtures/middlewares/valid-*.js'),
+      middlewaresGlobalGlob: join(__dirname, 'fixtures/middlewares/valid-*.js'),
       modelsGlob: join(__dirname, 'nope'),
       staticEndpoint: '/static-endpoint',
       staticPath: join(__dirname, '../example/static')
