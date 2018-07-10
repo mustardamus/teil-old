@@ -14,3 +14,5 @@ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo s
 ```
 
 From https://github.com/facebook/jest/issues/3254#issuecomment-297869853
+
+:)
